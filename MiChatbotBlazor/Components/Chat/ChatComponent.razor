@@ -1,0 +1,162 @@
+﻿@using MiChatbotBlazor.Data.Models
+@inject IChatService ChatService
+@inject IAIService AIService
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+
+<div class="chat-container d-flex flex-column h-100">
+    <!-- Header -->
+    <div class="chat-header bg-primary text-white p-3 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <img src="/images/bot-icon.png" alt="Bot" class="me-2" style="width: 40px; height: 40px;" />
+            <div>
+                <h5 class="mb-0">Mi Chatbot</h5>
+                <small class="@(IsOnline ? "text-success" : "text-warning")">
+                    @(IsOnline ? "En línea" : "Desconectado")
+                </small>
+            </div>
+        </div>
+        <button class="btn btn-outline-light btn-sm" @onclick="ClearChat">
+            <i class="fas fa-plus"></i> Nuevo Chat
+        </button>
+    </div>
+
+    <!-- Área de mensajes -->
+    <div class="messages-container flex-grow-1 overflow-auto p-3" @ref="messagesContainer">
+        @if (messages.Any())
+        {
+            @foreach (var message in messages)
+            {
+                <MessageItem Message="message" OnCopyMessage="CopyToClipboard" />
+            }
+        }
+        
+        @if (isLoading)
+        {
+            <LoadingIndicator />
+        }
+    </div>
+
+    <!-- Input de mensaje -->
+    <ChatInput OnSendMessage="SendMessage" IsLoading="isLoading" />
+</div>
+
+<style>
+    .chat-container {
+        height: calc(100vh - 100px);
+        max-width: 800px;
+        margin: 0 auto;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .messages-container {
+        background-color: #f8f9fa;
+    }
+
+    .messages-container::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .messages-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .messages-container::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 3px;
+    }
+</style>
+
+@code {
+    [Parameter] public int SessionId { get; set; } = 1;
+    
+    private List<MiChatbotBlazor.Data.Models.ChatMessage> messages = new();
+    private bool isLoading = false;
+    private bool IsOnline => true; // Implementar lógica de conexión
+    private ElementReference messagesContainer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMessages();
+    }
+
+    private async Task LoadMessages()
+    {
+        messages = await ChatService.GetMessagesAsync(SessionId);
+        StateHasChanged();
+        await ScrollToBottom();
+    }
+
+    private async Task SendMessage(string messageContent)
+    {
+        if (string.IsNullOrWhiteSpace(messageContent) || isLoading)
+            return;
+
+        try
+        {
+            isLoading = true;
+            StateHasChanged();
+
+            // Agregar mensaje del usuario
+            var userMessage = await ChatService.AddMessageAsync(SessionId, messageContent, "user");
+            messages.Add(userMessage);
+            StateHasChanged();
+            await ScrollToBottom();
+
+            // Obtener respuesta de la IA
+            var conversationHistory = messages
+                .Where(m => m.Sender == "user")
+                .Select(m => m.Content)
+                .ToList();
+
+            var aiResponse = await AIService.GetResponseAsync(messageContent, conversationHistory);
+
+            // Agregar respuesta del bot
+            var botMessage = await ChatService.AddMessageAsync(SessionId, aiResponse, "bot");
+            messages.Add(botMessage);
+            
+            StateHasChanged();
+            await ScrollToBottom();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error enviando mensaje: {ex.Message}");
+            var errorMessage = await ChatService.AddMessageAsync(SessionId, 
+                "Lo siento, hubo un error. Intenta de nuevo.", "bot");
+            messages.Add(errorMessage);
+            StateHasChanged();
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ClearChat()
+    {
+        var newSession = await ChatService.CreateSessionAsync("demo", "Nueva Conversación");
+        SessionId = newSession.Id;
+        await LoadMessages();
+    }
+
+    private async Task CopyToClipboard(string text)
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
+        // Mostrar notificación de copiado (implementar)
+    }
+
+    private async Task ScrollToBottom()
+    {
+        await Task.Delay(50); // Pequeño delay para asegurar que el DOM se actualice
+        await JSRuntime.InvokeVoidAsync("scrollToBottom", messagesContainer);
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        // Cleanup si es necesario
+        return ValueTask.CompletedTask;
+    }
+}

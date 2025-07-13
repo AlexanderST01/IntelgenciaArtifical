@@ -1,0 +1,92 @@
+﻿@using MiChatbotBlazor.Data.Models
+@using MessageModel = MiChatbotBlazor.Data.Models.ChatMessage
+
+<div class="message-wrapper mb-3 @(Message.Sender == "user" ? "text-end" : "text-start")">
+    <div class="d-flex @(Message.Sender == "user" ? "justify-content-end" : "justify-content-start")">
+        <div class="message-content @GetMessageClasses() position-relative" style="max-width: 70%;">
+            @if (Message.Sender == "bot")
+            {
+                <img src="/images/bot-avatar.png" alt="Bot" class="message-avatar me-2" />
+            }
+            
+            <div class="message-bubble @GetBubbleClasses()">
+                <p class="mb-1">@Message.Content</p>
+                <small class="message-time text-muted">
+                    @Message.Timestamp.ToString("HH:mm")
+                </small>
+                
+                @if (Message.Sender == "bot")
+                {
+                    <button class="btn btn-sm btn-outline-secondary copy-btn" 
+                            @onclick="() => OnCopyMessage.InvokeAsync(Message.Content)"
+                            title="Copiar mensaje">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                }
+            </div>
+            
+            @if (Message.Sender == "user")
+            {
+                <img src="/images/user-avatar.png" alt="Usuario" class="message-avatar ms-2" />
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .message-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .message-bubble {
+        padding: 12px 16px;
+        border-radius: 18px;
+        position: relative;
+        word-wrap: break-word;
+    }
+
+    .message-bubble.user {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .message-bubble.bot {
+        background-color: #e9ecef;
+        color: #333;
+    }
+
+    .copy-btn {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        padding: 4px 8px;
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    .message-bubble:hover .copy-btn {
+        opacity: 1;
+    }
+
+    .message-time {
+        font-size: 0.75rem;
+    }
+</style>
+
+@code {
+    [Parameter] public MessageModel Message { get; set; } = null!;
+    [Parameter] public EventCallback<string> OnCopyMessage { get; set; }
+
+    private string GetMessageClasses()
+    {
+        return Message.Sender == "user" ? "align-items-end" : "align-items-start";
+    }
+
+    private string GetBubbleClasses()
+    {
+        return Message.Sender == "user" ? "user" : "bot";
+    }
+}

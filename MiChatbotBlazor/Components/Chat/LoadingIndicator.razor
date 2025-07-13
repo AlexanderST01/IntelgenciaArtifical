@@ -1,0 +1,62 @@
+﻿<div class="loading-indicator d-flex justify-content-start mb-3">
+    <div class="d-flex align-items-start">
+        <img src="/images/bot-avatar.png" alt="Bot" class="message-avatar me-2" />
+        <div class="loading-bubble bg-light p-3 rounded">
+            <div class="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .message-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+    }
+
+    .loading-bubble {
+        border-radius: 18px;
+    }
+
+    .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .typing-indicator span {
+        height: 8px;
+        width: 8px;
+        background-color: #007bff;
+        border-radius: 50%;
+        display: inline-block;
+        animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-indicator span:nth-child(1) {
+        animation-delay: -0.32s;
+    }
+
+    .typing-indicator span:nth-child(2) {
+        animation-delay: -0.16s;
+    }
+
+    @@keyframes typing {
+        0%, 80%, 100% {
+            transform: scale(0.8);
+            opacity: 0.5;
+        }
+        40% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+</style>
+
+@code {
+
+}

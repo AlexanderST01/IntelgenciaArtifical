@@ -1,0 +1,30 @@
+@page "/chat"
+@page "/chat/{sessionId:int}"
+
+<PageTitle>Chat - Mi Chatbot</PageTitle>
+
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <!-- Área principal del chat -->
+        <div class="col-12 p-0">
+            <ChatComponent SessionId="currentSessionId" />
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public int? SessionId { get; set; }
+    
+    private int currentSessionId = 1;
+
+    protected override void OnInitialized()
+    {
+        currentSessionId = SessionId ?? 1;
+    }
+
+    private void LoadSession(int sessionId)
+    {
+        currentSessionId = sessionId;
+        StateHasChanged();
+    }
+}
