@@ -11,5 +11,6 @@ namespace MiChatbotBlazor.Services
         Task<ChatSession?> GetSessionAsync(int sessionId);
         Task DeleteSessionAsync(int sessionId);
         Task<int> GetLastSessionIdAsync(string userId);
+        Task<List<ChatSession>> GetChatsSessionsAsync(string userId);
     }
 }

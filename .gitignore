@@ -5,3 +5,8 @@
 **/bin/**
 **/obj/**
 /.vs
+/MiChatbotBlazor/bin/Debug/net8.0/MiChatbotBlazor.dll
+/MiChatbotBlazor/bin/Debug/net8.0/MiChatbotBlazor.exe
+/MiChatbotBlazor/bin/Debug/net8.0/MiChatbotBlazor.pdb
+/MiChatbotBlazor/bin/Debug/net8.0/MiChatbotBlazor.staticwebassets.endpoints.json
+/MiChatbotBlazor/bin/Debug/net8.0/MiChatbotBlazor.staticwebassets.runtime.json

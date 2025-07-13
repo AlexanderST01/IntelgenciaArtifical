@@ -21,7 +21,15 @@ namespace MiChatbotBlazor.Services
                 .FirstOrDefaultAsync();
 
             return session?.Id ?? 0;
-        }   
+        }  
+        
+        public async Task<List<ChatSession>> GetChatsSessionsAsync(string userId)
+        {
+            return await _context.ChatSessions
+                .Where(s => s.UserId == userId && s.IsActive)
+                .OrderByDescending(s => s.UpdatedAt)
+                .ToListAsync();
+        }
 
         public async Task<List<ChatMessage>> GetMessagesAsync(int sessionId)
         {
