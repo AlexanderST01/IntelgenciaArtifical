@@ -70,7 +70,7 @@
 </style>
 
 @code {
-    [Parameter] public int SessionId { get; set; } = 1;
+    [Parameter] public int SessionId { get; set; } = 0;
     
     private List<MiChatbotBlazor.Data.Models.ChatMessage> messages = new();
     private bool isLoading = false;
@@ -100,7 +100,11 @@
 
     private async Task LoadMessages()
     {
-        messages = await ChatService.GetMessagesAsync(SessionId);
+        var lastSesionId = SessionId > 0 ?
+                        SessionId : 
+                        await ChatService.GetLastSessionIdAsync("demo");
+
+        messages = await ChatService.GetMessagesAsync(lastSesionId);
         StateHasChanged();
         RequestScrollToBottom();
     }

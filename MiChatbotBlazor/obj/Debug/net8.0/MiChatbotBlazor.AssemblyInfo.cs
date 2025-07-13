@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MiChatbotBlazor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9edbdaeec188ccfb2726aa8f15955cd8bac713e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a72febdbe6caa0219e8042ede60e480361d1b34e")]
 [assembly: System.Reflection.AssemblyProductAttribute("MiChatbotBlazor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MiChatbotBlazor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
