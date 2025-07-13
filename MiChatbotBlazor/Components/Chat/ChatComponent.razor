@@ -76,17 +76,45 @@
     private bool isLoading = false;
     private bool IsOnline => true; // Implementar lógica de conexión
     private ElementReference messagesContainer;
+    private bool hasRendered = false;
+    private bool shouldScrollToBottom = false;
 
     protected override async Task OnInitializedAsync()
     {
         await LoadMessages();
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            hasRendered = true;
+        }
+
+        if (shouldScrollToBottom && hasRendered)
+        {
+            shouldScrollToBottom = false;
+            await ScrollToBottomSafe();
+        }
+    }
+
     private async Task LoadMessages()
     {
         messages = await ChatService.GetMessagesAsync(SessionId);
         StateHasChanged();
-        await ScrollToBottom();
+        RequestScrollToBottom();
+    }
+
+    private void RequestScrollToBottom()
+    {
+        if (hasRendered)
+        {
+            _ = Task.Run(async () => await ScrollToBottomSafe());
+        }
+        else
+        {
+            shouldScrollToBottom = true;
+        }
     }
 
     private async Task SendMessage(string messageContent)
@@ -103,7 +131,7 @@
             var userMessage = await ChatService.AddMessageAsync(SessionId, messageContent, "user");
             messages.Add(userMessage);
             StateHasChanged();
-            await ScrollToBottom();
+            RequestScrollToBottom();
 
             // Obtener respuesta de la IA
             var conversationHistory = messages
@@ -118,7 +146,7 @@
             messages.Add(botMessage);
             
             StateHasChanged();
-            await ScrollToBottom();
+            RequestScrollToBottom();
         }
         catch (Exception ex)
         {
@@ -144,14 +172,32 @@
 
     private async Task CopyToClipboard(string text)
     {
-        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
-        // Mostrar notificación de copiado (implementar)
+        if (hasRendered)
+        {
+            await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
+            // Mostrar notificación de copiado (implementar)
+        }
+    }
+
+    private async Task ScrollToBottomSafe()
+    {
+        if (hasRendered)
+        {
+            try
+            {
+                await Task.Delay(50); // Pequeño delay para asegurar que el DOM se actualice
+                await JSRuntime.InvokeVoidAsync("scrollToBottom", messagesContainer);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al hacer scroll: {ex.Message}");
+            }
+        }
     }
 
     private async Task ScrollToBottom()
     {
-        await Task.Delay(50); // Pequeño delay para asegurar que el DOM se actualice
-        await JSRuntime.InvokeVoidAsync("scrollToBottom", messagesContainer);
+        await ScrollToBottomSafe();
     }
 
     public ValueTask DisposeAsync()
