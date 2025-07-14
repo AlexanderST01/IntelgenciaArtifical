@@ -19,6 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Servicios personalizados - Usando Mistral AI
 builder.Services.AddScoped<IAIService, MistralService>();
 builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddSingleton<SessionStateService>();
 
 // HttpClient para servicios externos
 builder.Services.AddHttpClient<MistralService>();

@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "C:\\Dotnet\\IntelgenciaArtifical\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|c:\\dotnet\\intelgenciaartifical\\michatbotblazor\\shared\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|solutionrelative:michatbotblazor\\shared\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|c:\\dotnet\\intelgenciaartifical\\michatbotblazor\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|solutionrelative:michatbotblazor\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|c:\\dotnet\\intelgenciaartifical\\michatbotblazor\\components\\chat\\chatcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|solutionrelative:michatbotblazor\\components\\chat\\chatcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|c:\\dotnet\\intelgenciaartifical\\michatbotblazor\\services\\ichatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|solutionrelative:michatbotblazor\\services\\ichatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|c:\\dotnet\\intelgenciaartifical\\michatbotblazor\\services\\chatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|solutionrelative:michatbotblazor\\services\\chatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|c:\\dotnet\\intelgenciaartifical\\michatbotblazor\\components\\chat\\messageitem.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{210E164F-B81B-C0F9-C1C9-CB32A1A39095}|MiChatbotBlazor\\MiChatbotBlazor.csproj|solutionrelative:michatbotblazor\\components\\chat\\messageitem.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -26,8 +46,47 @@
       "DocumentGroups": [
         {
           "DockedWidth": 195,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Shared\\NavMenu.razor",
+              "RelativeDocumentMoniker": "MiChatbotBlazor\\Shared\\NavMenu.razor",
+              "ToolTip": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Shared\\NavMenu.razor",
+              "RelativeToolTip": "MiChatbotBlazor\\Shared\\NavMenu.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-13T21:32:49.762Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Components\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "MiChatbotBlazor\\Components\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Components\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "MiChatbotBlazor\\Components\\Layout\\NavMenu.razor",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-13T21:32:33.914Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IChatService.cs",
+              "DocumentMoniker": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Services\\IChatService.cs",
+              "RelativeDocumentMoniker": "MiChatbotBlazor\\Services\\IChatService.cs",
+              "ToolTip": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Services\\IChatService.cs",
+              "RelativeToolTip": "MiChatbotBlazor\\Services\\IChatService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAwAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-13T21:25:13.456Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -42,20 +101,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "ChatComponent.razor",
+              "DocumentMoniker": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Components\\Chat\\ChatComponent.razor",
+              "RelativeDocumentMoniker": "MiChatbotBlazor\\Components\\Chat\\ChatComponent.razor",
+              "ToolTip": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Components\\Chat\\ChatComponent.razor",
+              "RelativeToolTip": "MiChatbotBlazor\\Components\\Chat\\ChatComponent.razor",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAACsAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-13T21:22:52.515Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ChatService.cs",
+              "DocumentMoniker": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Services\\ChatService.cs",
+              "RelativeDocumentMoniker": "MiChatbotBlazor\\Services\\ChatService.cs",
+              "ToolTip": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Services\\ChatService.cs",
+              "RelativeToolTip": "MiChatbotBlazor\\Services\\ChatService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAuwA8AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-13T21:22:42.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "MessageItem.razor",
               "DocumentMoniker": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Components\\Chat\\MessageItem.razor",
               "RelativeDocumentMoniker": "MiChatbotBlazor\\Components\\Chat\\MessageItem.razor",
               "ToolTip": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Components\\Chat\\MessageItem.razor",
               "RelativeToolTip": "MiChatbotBlazor\\Components\\Chat\\MessageItem.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAABIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-07-13T17:25:08.171Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "Chat.razor",
               "DocumentMoniker": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\Pages\\Chat.razor",
               "RelativeDocumentMoniker": "MiChatbotBlazor\\Pages\\Chat.razor",
@@ -63,12 +148,11 @@
               "RelativeToolTip": "MiChatbotBlazor\\Pages\\Chat.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-13T17:20:42.217Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T17:20:42.217Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\appsettings.Development.json",
               "RelativeDocumentMoniker": "MiChatbotBlazor\\appsettings.Development.json",
@@ -76,12 +160,11 @@
               "RelativeToolTip": "MiChatbotBlazor\\appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-13T17:20:26.767Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T17:20:26.767Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "ERRORES_RESUELTOS.md",
               "DocumentMoniker": "C:\\Dotnet\\IntelgenciaArtifical\\MiChatbotBlazor\\ERRORES_RESUELTOS.md",
               "RelativeDocumentMoniker": "MiChatbotBlazor\\ERRORES_RESUELTOS.md",
@@ -89,8 +172,7 @@
               "RelativeToolTip": "MiChatbotBlazor\\ERRORES_RESUELTOS.md",
               "ViewState": "AgIAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-07-13T17:20:11.651Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-13T17:20:11.651Z"
             }
           ]
         }

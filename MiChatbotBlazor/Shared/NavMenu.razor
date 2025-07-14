@@ -1,155 +1,146 @@
-﻿@inject IChatService ChatService
+﻿@inject MiChatbotBlazor.Services.IChatService ChatService
+@inject NavigationManager Navigation
+@inject SessionStateService SessionState
 
-@* <div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">MiChatbotBlazor</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
+
+<!-- Mobile Topbar (visible only on mobile) -->
+<div class="d-md-none bg-dark w-100 position-fixed top-0 start-0" style="z-index: 1050;">
+    <div class="d-flex align-items-center justify-content-between p-3 border-bottom border-secondary">
+        <span class="fs-5 fw-semibold text-white">Sesiones de Chat</span>
+        <button class="btn btn-dark border-0" @onclick="ToggleNavMenu" type="button">
+            <span class="text-white">
+                @if (collapseNavMenu)
+                {
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                }
+                else
+                {
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                }
+            </span>
         </button>
     </div>
-</div>
-
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        @foreach (var items in Sessions)
-        {
-            <div class="nav-item">
-                <NavLink class="nav-link" href="counter">
-                    <span class="oi oi-plus" aria-hidden="true"></span> @items.Title 
-                </NavLink>
-            </div>
-        }
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
-</div> *@
-
-
-<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px; height: 100vh;">
-      <nav class="flex-column h-100 d-flex">
-    <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-        <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap" /></svg>
-        <span class="fs-5 fw-semibold">List group</span>
-    </a>
-    <div class="list-group list-group-flush border-bottom flex-grow-1" style="overflow-y: auto; max-height: calc(100vh - 100px);">
-        @foreach (var session in Sessions)
-        {
-            <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-                <div class="d-flex w-100 align-items-center justify-content-between">
-                    <strong class="mb-1">@session.Title</strong>
-                    <small class="text-muted">@session.CreatedAt.ToString("MMM dd")</small>
+    
+    <!-- Mobile Dropdown Menu -->
+    <div class="@(collapseNavMenu ? "d-none" : "d-block") bg-dark border-top border-secondary" style="max-height: 70vh; overflow-y: auto;">
+        <div class="list-group list-group-flush">
+            @if (Sessions != null && Sessions.Any())
+            {
+                @foreach (var session in Sessions)
+                {
+                    <div class="list-group-item list-group-item-action py-3 bg-dark text-light border-0" style="border-bottom: 1px solid #495057 !important; cursor: pointer;" @onclick="() => NavigateToSession(session.Id)">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <strong class="mb-1 text-white">@session.Title</strong>
+                            <small class="text-muted">@session.CreatedAt.ToString("MMM dd")</small>
+                        </div>
+                        <div class="mb-1 small">
+                            @if (session.Messages != null && session.Messages.Any())
+                            {
+                                var lastMessage = session.Messages.OrderByDescending(m => m.Timestamp).FirstOrDefault();
+                                @if (lastMessage != null)
+                                {
+                                    <span class="text-light">@(lastMessage.Content.Length > 50 ? lastMessage.Content.Substring(0, 50) + "..." : lastMessage.Content)</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">Nueva conversación</span>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="list-group-item py-3 bg-dark border-0">
+                    <div class="text-center text-muted">
+                        <p class="mb-0">No hay sesiones de chat</p>
+                        <small>Inicia una nueva conversación</small>
+                    </div>
                 </div>
-                <div class="col-10 mb-1 small">@(session.Messages?.FirstOrDefault()?.Content ?? "Nueva conversación")</div>
-            </a>
-        }
+            }
+        </div>
     </div>
-    </nav>
+</div>
 
+<!-- Desktop Sidebar (visible only on desktop) -->
+<div class="d-none d-md-flex flex-column align-items-stretch flex-shrink-0 bg-dark h-100 position-relative" style="width: 280px; max-width: 380px;">
+    <nav class="flex-column h-100">
+        <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-light text-decoration-none border-bottom border-secondary">
+            <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap" /></svg>
+            <span class="fs-5 fw-semibold text-white">Sesiones de Chat</span>
+        </a>
+        <div class="list-group list-group-flush border-bottom border-secondary flex-grow-1 overflow-auto" style="background: transparent;">
+            @if (Sessions != null && Sessions.Any())
+            {
+                @foreach (var session in Sessions)
+                {
+                    <div class="list-group-item list-group-item-action py-3 lh-tight bg-dark text-light border-0" style="border-bottom: 1px solid #495057 !important; cursor: pointer;" @onclick="() => NavigateToSession(session.Id)">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <strong class="mb-1 text-white">@session.Title</strong>
+                            <small class="text-muted">@session.CreatedAt.ToString("MMM dd")</small>
+                        </div>
+                        <div class="col-10 mb-1 small">
+                            @if (session.Messages != null && session.Messages.Any())
+                            {
+                                var lastMessage = session.Messages.OrderByDescending(m => m.Timestamp).FirstOrDefault();
+                                @if (lastMessage != null)
+                                {
+                                    <span class="text-light">@(lastMessage.Content.Length > 60 ? lastMessage.Content.Substring(0, 60) + "..." : lastMessage.Content)</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">Nueva conversación</span>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="list-group-item py-3 lh-tight bg-dark border-0">
+                    <div class="text-center text-muted">
+                        <p class="mb-0">No hay sesiones de chat</p>
+                        <small>Inicia una nueva conversación</small>
+                    </div>
+                </div>
+            }
+        </div>
+    </nav>
 </div>
 
 @code {
     private bool collapseNavMenu = true;
-    private List<ChatSession> Sessions { get; set; } = new();
+    private List<MiChatbotBlazor.Data.Models.ChatSession> Sessions { get; set; } = new();
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    
     protected override async Task OnInitializedAsync()
     {
         var sessionList = await ChatService.GetChatsSessionsAsync("demo");
         Sessions = sessionList;
-        ToggleNavMenu();
         StateHasChanged();
     }
-
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
-}
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-                <strong class="mb-1">List group item heading</strong>
-                <small class="text-muted">Mon</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-                <strong class="mb-1">List group item heading</strong>
-                <small class="text-muted">Wed</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-                <strong class="mb-1">List group item heading</strong>
-                <small class="text-muted">Tues</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-                <strong class="mb-1">List group item heading</strong>
-                <small class="text-muted">Mon</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-                <strong class="mb-1">List group item heading</strong>
-                <small class="text-muted">Wed</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-                <strong class="mb-1">List group item heading</strong>
-                <small class="text-muted">Tues</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-                <strong class="mb-1">List group item heading</strong>
-                <small class="text-muted">Mon</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-        </a>
-    </div>
-    </nav>
 
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-    private List<ChatSession> Sessions { get; set; } = new();
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-    protected override async Task OnInitializedAsync()
+    private void NavigateToSession(int sessionId)
     {
-        var sessionList = await ChatService.GetChatsSessionsAsync("demo");
-        Sessions = sessionList;
-        ToggleNavMenu();
+        // Cerrar el menú móvil si está abierto
+        collapseNavMenu = true;
+        
+        // Actualizar el estado de la sesión actual
+        SessionState.SetCurrentSession(sessionId);
+        
+        // Navegar a la sesión
+        Navigation.NavigateTo($"/chat/{sessionId}");
         StateHasChanged();
-    }
-
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
     }
 }

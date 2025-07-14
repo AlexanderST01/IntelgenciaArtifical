@@ -44,7 +44,8 @@
 <style>
     .chat-container {
         height: calc(100vh - 100px);
-        max-width: 800px;
+        @* max-width: 800px; *@
+        max-width: 100%;
         margin: 0 auto;
         border: 1px solid #dee2e6;
         border-radius: 8px;
@@ -78,10 +79,22 @@
     private ElementReference messagesContainer;
     private bool hasRendered = false;
     private bool shouldScrollToBottom = false;
+    private int previousSessionId = 0;
 
     protected override async Task OnInitializedAsync()
     {
+        previousSessionId = SessionId;
         await LoadMessages();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Si cambió el SessionId, recargar los mensajes
+        if (SessionId != previousSessionId)
+        {
+            previousSessionId = SessionId;
+            await LoadMessages();
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

@@ -60,10 +60,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xDaGF0XE1lc3NhZ2VJdGVtLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Dotnet/IntelgenciaArtifical/MiChatbotBlazor/Components/Layout/MainLayout.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Dotnet/IntelgenciaArtifical/MiChatbotBlazor/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

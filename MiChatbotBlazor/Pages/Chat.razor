@@ -1,5 +1,7 @@
 @page "/chat"
 @page "/chat/{sessionId:int}"
+@inject SessionStateService SessionState
+@implements IDisposable
 
 <PageTitle>Chat - Mi Chatbot</PageTitle>
 
@@ -20,11 +22,41 @@
     protected override void OnInitialized()
     {
         currentSessionId = SessionId ?? 1;
+        
+        // Suscribirse a cambios de sesión
+        SessionState.SessionChanged += OnSessionChanged;
+        
+        // Si hay una sesión actual en el estado, usarla
+        if (SessionState.CurrentSessionId > 0)
+        {
+            currentSessionId = SessionState.CurrentSessionId;
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (SessionId.HasValue && SessionId.Value != currentSessionId)
+        {
+            currentSessionId = SessionId.Value;
+            SessionState.SetCurrentSession(currentSessionId);
+        }
+    }
+
+    private void OnSessionChanged(int sessionId)
+    {
+        currentSessionId = sessionId;
+        InvokeAsync(StateHasChanged);
     }
 
     private void LoadSession(int sessionId)
     {
         currentSessionId = sessionId;
+        SessionState.SetCurrentSession(sessionId);
         StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        SessionState.SessionChanged -= OnSessionChanged;
     }
 }

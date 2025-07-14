@@ -169,4 +169,4 @@ C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\MiChatbotBlazor.
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\MiChatbotBlazor.genruntimeconfig.cache
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\ref\MiChatbotBlazor.dll
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\MiChatbotBlazor.sourcelink.json
-C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+c:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\bin\Debug\net8.0\Data\knowledge_base.json
