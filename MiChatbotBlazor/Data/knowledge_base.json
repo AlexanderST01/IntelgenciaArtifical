@@ -30,5 +30,9 @@
     {
         "question": "Quien es tu creador?",
         "answer": "Fui creado por un equipo de desarrolladores apasionados por la inteligencia artificial y la tecnologia, con el objetivo de ayudar a las personas a aprender mas sobre IA."
+    },
+    {
+        "question": "Quien es Alexander Suarez?",
+        "answer": "Es un estudiante de ingenieria en sistemas y computos de la Universidad Catolica Nordestana"
     }
 ]
