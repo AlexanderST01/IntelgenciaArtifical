@@ -28,26 +28,28 @@ public class MistralService : IAIService
 
     public async Task<string> GetResponseAsync(string userMessage, List<string> conversationHistory)
     {
-        // 1. Buscar en la base de conocimiento
-        var faqAnswer = _kbService.GetAnswer(userMessage);
-        if (!string.IsNullOrEmpty(faqAnswer))
-            return faqAnswer;
+        // 1. Preparar knowledge base para el prompt
+        var faqs = _kbService.GetAllFAQs();
+        var faqsText = string.Join("\n", faqs.Select(f => $"P: {f.question}\nR: {f.answer}"));
 
-        // 2. Filtrar temas fuera de IA
-        if (!_kbService.IsAboutAI(userMessage))
-            return "Lo siento, solo puedo responder preguntas relacionadas con inteligencia artificial.";
+        // 2. Prompt instructivo para Mistral
+        var systemPrompt =
+            "Eres un asistente virtual experto en inteligencia artificial. " +
+            "Tienes la siguiente base de conocimiento de preguntas frecuentes (FAQ):\n" +
+            faqsText +
+            "\nSi la pregunta del usuario coincide exactamente o es muy similar a alguna de las preguntas frecuentes, responde exactamente con la respuesta proporcionada. Si no, responde como experto en IA. Responde en español.";
 
         try
         {
             var messages = new List<object>
             {
-                new { role = "system", content = "Eres un asistente virtual experto en inteligencia artificial. Solo responde preguntas sobre IA. Si la pregunta no es relevante, indica que solo puedes hablar de IA. Responde en español." }
+                new { role = "system", content = systemPrompt }
             };
 
             // Agregar historial de conversación (alternar entre user y assistant)
-            for (int i = 0; i < conversationHistory.Count && i < 10; i++)
+            foreach(var message in conversationHistory)
             {
-                messages.Add(new { role = "user", content = conversationHistory[i] });
+                messages.Add(new { role = "user", content = message });
             }
 
             // Agregar mensaje actual

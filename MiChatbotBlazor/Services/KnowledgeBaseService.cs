@@ -6,6 +6,9 @@ namespace MiChatbotBlazor.Services
     public class KnowledgeBaseService
     {
         private readonly List<FAQItem> _faqItems;
+        private readonly List<string> _greetings = new() { "hola", "buenos dias", "buenas tardes", "buenas noches", "saludos", "hello", "hi" };
+        private const string GreetingResponse = "¡Hola! ¿En qué puedo ayudarte sobre inteligencia artificial?";
+
         public KnowledgeBaseService(string filePath)
         {
             if (File.Exists(filePath))
@@ -21,15 +24,21 @@ namespace MiChatbotBlazor.Services
 
         public string? GetAnswer(string userQuestion)
         {
+            // Responder a saludos
+            if (IsGreeting(userQuestion))
+                return GreetingResponse;
+
             // Búsqueda exacta o por similitud básica (puedes mejorar con NLP)
             var normalized = Normalize(userQuestion);
             foreach (var item in _faqItems)
             {
-                if (Normalize(item.Question) == normalized || normalized.Contains(Normalize(item.Question)))
-                    return item.Answer;
+                if (Normalize(item.question) == normalized || normalized.Contains(Normalize(item.question)))
+                    return item.answer;
             }
             return null;
         }
+
+        public List<FAQItem> GetAllFAQs() => _faqItems;
 
         public bool IsAboutAI(string userQuestion)
         {
@@ -37,6 +46,12 @@ namespace MiChatbotBlazor.Services
             var keywords = new[] { "inteligencia artificial", "ia", "machine learning", "aprendizaje automático", "deep learning", "red neuronal", "modelo de lenguaje", "chatbot" };
             var normalized = Normalize(userQuestion);
             return keywords.Any(k => normalized.Contains(k));
+        }
+
+        private bool IsGreeting(string userQuestion)
+        {
+            var normalized = Normalize(userQuestion);
+            return _greetings.Any(g => normalized.StartsWith(g) || normalized == g);
         }
 
         private string Normalize(string text)
@@ -47,8 +62,8 @@ namespace MiChatbotBlazor.Services
 
         public class FAQItem
         {
-            public string Question { get; set; } = string.Empty;
-            public string Answer { get; set; } = string.Empty;
+            public string question { get; set; } = string.Empty;
+            public string answer { get; set; } = string.Empty;
         }
     }
 }

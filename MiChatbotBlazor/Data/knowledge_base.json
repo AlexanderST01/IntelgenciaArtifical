@@ -1,22 +1,34 @@
 [
-  {
-    "question": "¿Qué es la inteligencia artificial?",
-    "answer": "La inteligencia artificial (IA) es una rama de la informática que se enfoca en crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana, como el aprendizaje, el razonamiento y la resolución de problemas."
-  },
-  {
-    "question": "¿Cuáles son los tipos de inteligencia artificial?",
-    "answer": "Existen varios tipos de IA, incluyendo la IA débil (o estrecha), la IA general y la IA superinteligente. La IA débil está diseñada para tareas específicas, mientras que la IA general puede realizar cualquier tarea cognitiva humana."
-  },
-  {
-    "question": "¿Para qué sirve el aprendizaje automático?",
-    "answer": "El aprendizaje automático es una subárea de la IA que permite a los sistemas aprender y mejorar automáticamente a partir de la experiencia sin ser programados explícitamente."
-  },
-  {
-    "question": "¿Qué es el aprendizaje profundo?",
-    "answer": "El aprendizaje profundo es una técnica de aprendizaje automático basada en redes neuronales artificiales con muchas capas, utilizada para tareas como reconocimiento de voz, visión por computadora y procesamiento de lenguaje natural."
-  },
-  {
-    "question": "¿Puedes responder preguntas que no sean de IA?",
-    "answer": "Lo siento, solo puedo responder preguntas relacionadas con inteligencia artificial."
-  }
+    {
+        "question": "Que es la inteligencia artificial?",
+        "answer": "La inteligencia artificial (IA) es una rama de la informatica que se enfoca en crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana, como el aprendizaje, el razonamiento y la resolucion de problemas."
+    },
+    {
+        "question": "Cuales son los tipos de inteligencia artificial?",
+        "answer": "Existen varios tipos de IA, incluyendo la IA debil (o estrecha), la IA general y la IA superinteligente. La IA debil esta disenada para tareas especificas, mientras que la IA general puede realizar cualquier tarea cognitiva humana."
+    },
+    {
+        "question": "Para que sirve el aprendizaje automatico?",
+        "answer": "El aprendizaje automatico es una subarea de la IA que permite a los sistemas aprender y mejorar automaticamente a partir de la experiencia sin ser programados explicitamente."
+    },
+    {
+        "question": "Que es el aprendizaje profundo?",
+        "answer": "El aprendizaje profundo es una tecnica de aprendizaje automatico basada en redes neuronales artificiales con muchas capas, utilizada para tareas como reconocimiento de voz, vision por computadora y procesamiento de lenguaje natural."
+    },
+    {
+        "question": "Puedes responder preguntas que no sean de IA?",
+        "answer": "Lo siento, solo puedo responder preguntas relacionadas con inteligencia artificial."
+    },
+    {
+        "question": "Quienes te crearon?",
+        "answer": "Fui creado por un equipo de desarrolladores apasionados por la inteligencia artificial y la tecnologia, con el objetivo de ayudar a las personas a aprender mas sobre IA."
+    },
+    {
+        "question": "Quien te creo?",
+        "answer": "Fui creado por un equipo de desarrolladores apasionados por la inteligencia artificial y la tecnologia, con el objetivo de ayudar a las personas a aprender mas sobre IA."
+    },
+    {
+        "question": "Quien es tu creador?",
+        "answer": "Fui creado por un equipo de desarrolladores apasionados por la inteligencia artificial y la tecnologia, con el objetivo de ayudar a las personas a aprender mas sobre IA."
+    }
 ]
