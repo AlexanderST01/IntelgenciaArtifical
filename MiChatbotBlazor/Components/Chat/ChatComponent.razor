@@ -150,11 +150,12 @@
             StateHasChanged();
             RequestScrollToBottom();
 
-            // Obtener respuesta de la IA
+            // Preparar historial completo de conversación (incluye tanto user como bot)
             var conversationHistory = messages
-                .Where(m => m.Sender == "user")
-                .Select(m => m.Content)
-                .ToList();
+                .OrderBy(m => m.Timestamp)
+                .TakeLast(10) // Limitar a los últimos 10 mensajes para evitar prompts muy largos
+                .Select(m => (object)new { Content = m.Content, Sender = m.Sender })
+                .ToList<dynamic>();
 
             var aiResponse = await AIService.GetResponseAsync(messageContent, conversationHistory);
 

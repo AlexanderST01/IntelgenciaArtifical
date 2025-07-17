@@ -28,6 +28,13 @@ public class MistralService : IAIService
 
     public async Task<string> GetResponseAsync(string userMessage, List<string> conversationHistory)
     {
+        // Convertir el historial simple a formato completo
+        var fullHistory = conversationHistory.Select(msg => new { Content = msg, Sender = "user" }).ToList<dynamic>();
+        return await GetResponseAsync(userMessage, fullHistory);
+    }
+
+    public async Task<string> GetResponseAsync(string userMessage, List<dynamic> conversationHistory)
+    {
         // 1. Preparar knowledge base para el prompt
         var faqs = _kbService.GetAllFAQs();
         var faqsText = string.Join("\n", faqs.Select(f => $"P: {f.question}\nR: {f.answer}"));
@@ -36,6 +43,7 @@ public class MistralService : IAIService
         Console.WriteLine($"[DEBUG] FAQs cargadas: {faqs.Count}");
         Console.WriteLine($"[DEBUG] FAQ Text: {faqsText}");
         Console.WriteLine($"[DEBUG] User question: {userMessage}");
+        Console.WriteLine($"[DEBUG] Conversation history count: {conversationHistory.Count}");
 
         // 2. Prompt más específico para Mistral
         var systemPrompt = $@"Eres un asistente virtual experto en inteligencia artificial.
@@ -49,6 +57,7 @@ INSTRUCCIONES:
 2. Si la pregunta es muy similar (misma intención), usa la respuesta proporcionada.
 3. Solo si NO hay coincidencia, responde como experto en IA.
 4. Siempre responde en español.
+5. Mantén el contexto de la conversación previa.
 
 Analiza cuidadosamente la pregunta del usuario y busca coincidencias en tu base de conocimiento.";
 
@@ -59,10 +68,12 @@ Analiza cuidadosamente la pregunta del usuario y busca coincidencias en tu base 
                 new { role = "system", content = systemPrompt }
             };
 
-            // Agregar historial de conversación limitado
-            foreach(var message in conversationHistory.TakeLast(5)) // Solo últimos 5 mensajes
+            // Agregar historial de conversación completo (alternando entre user y assistant)
+            foreach(var historyItem in conversationHistory.TakeLast(8)) // Últimos 8 mensajes
             {
-                messages.Add(new { role = "user", content = message });
+                var role = historyItem.Sender == "user" ? "user" : "assistant";
+                messages.Add(new { role = role, content = historyItem.Content });
+                Console.WriteLine($"[DEBUG] Adding to history: {role} - {historyItem.Content}");
             }
 
             // Agregar mensaje actual
@@ -73,7 +84,7 @@ Analiza cuidadosamente la pregunta del usuario y busca coincidencias en tu base 
                 model = _configuration["Mistral:Model"] ?? "mistral-small-latest",
                 messages = messages,
                 max_tokens = 500,
-                temperature = 0.3, // Reducir temperatura para respuestas más consistentes
+                temperature = 0.3, // Temperatura baja para respuestas más consistentes
                 stream = false
             };
 
