@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 using MiChatbotBlazor.Data;
 using MiChatbotBlazor.Services;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IAIService, MistralService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddSingleton<SessionStateService>();
+
+// KnowledgeBaseService como singleton
+var kbPath = Path.Combine(AppContext.BaseDirectory, "Data", "knowledge_base.json");
+builder.Services.AddSingleton(new KnowledgeBaseService(kbPath));
 
 // HttpClient para servicios externos
 builder.Services.AddHttpClient<MistralService>();
