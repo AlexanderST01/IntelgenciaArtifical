@@ -6,12 +6,16 @@
         <div class="message-content @GetMessageClasses() position-relative" style="max-width: 70%;">
             @if (Message.Sender == "bot")
             {
-                <img src="/images/bot-avatar.png" alt="Bot" class="message-avatar me-2" />
+                <!-- Header con foto y username lado a lado -->
+                <div class="d-flex align-items-center mb-2">
+                    <img src="/images/bot-avatar.png" alt="Bot" class="message-avatar me-2" />
+                    <p class="text-black mb-0 fw-semibold">Bot</p>
+                </div>
             }
             
             <div class="message-bubble @GetBubbleClasses()">
                 <p class="mb-1">@Message.Content</p>
-                <small class="message-time text-muted">
+                <small class="message-time ">
                     @Message.Timestamp.ToString("HH:mm")
                 </small>
                 
@@ -27,7 +31,11 @@
             
             @if (Message.Sender == "user")
             {
-                <img src="/images/user-avatar.png" alt="Usuario" class="message-avatar ms-2" />
+                <!-- Header con foto y username para usuario -->
+                <div class="d-flex align-items-center justify-content-end mb-2">
+                    <p class="text-black mb-0 fw-semibold me-2">Usuario</p>
+                    <img src="/images/user-avatar.png" alt="Usuario" class="message-avatar" />
+                </div>
             }
         </div>
     </div>
