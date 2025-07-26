@@ -1,6 +1,8 @@
 @page "/chat"
 @page "/chat/{sessionId:int}"
 @inject SessionStateService SessionState
+@inject IChatService ChatService
+@inject NavigationManager Navigation
 @implements IDisposable
 
 <PageTitle>Chat - Mi Chatbot</PageTitle>
@@ -19,15 +21,45 @@
     
     private int currentSessionId = 1;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        currentSessionId = SessionId ?? 1;
+        // Si no hay SessionId en la URL, obtener la última sesión utilizada
+        if (!SessionId.HasValue)
+        {
+            // Intentar obtener la última sesión del usuario
+            var lastSessionId = await ChatService.GetLastSessionIdAsync("demo");
+            
+            if (lastSessionId > 0)
+            {
+                currentSessionId = lastSessionId;
+                SessionState.SetCurrentSession(currentSessionId);
+                
+                // Navegar a la URL con el SessionId para mantener consistencia
+                Navigation.NavigateTo($"/chat/{currentSessionId}", replace: true);
+                return;
+            }
+            else
+            {
+                // Si no hay sesiones, crear una nueva
+                var newSession = await ChatService.CreateSessionAsync("demo", "Nueva Conversación");
+                currentSessionId = newSession.Id;
+                SessionState.SetCurrentSession(currentSessionId);
+                
+                // Navegar a la nueva sesión
+                Navigation.NavigateTo($"/chat/{currentSessionId}", replace: true);
+                return;
+            }
+        }
+        else
+        {
+            currentSessionId = SessionId.Value;
+        }
         
         // Suscribirse a cambios de sesión
         SessionState.SessionChanged += OnSessionChanged;
         
         // Si hay una sesión actual en el estado, usarla
-        if (SessionState.CurrentSessionId > 0)
+        if (SessionState.CurrentSessionId > 0 && !SessionId.HasValue)
         {
             currentSessionId = SessionState.CurrentSessionId;
         }
