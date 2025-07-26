@@ -1,5 +1,7 @@
 ﻿@using MiChatbotBlazor.Data.Models
 @using MessageModel = MiChatbotBlazor.Data.Models.ChatMessage
+@using MiChatbotBlazor.Services
+@inject IMarkdownService MarkdownService
 
 <div class="message-wrapper mb-3 @(Message.Sender == "user" ? "text-end" : "text-start")">
     <div class="d-flex @(Message.Sender == "user" ? "justify-content-end" : "justify-content-start")">
@@ -14,7 +16,9 @@
             }
             
             <div class="message-bubble @GetBubbleClasses()">
-                <p class="mb-1">@Message.Content</p>
+                <div class="message-text">
+                    @((MarkupString)MarkdownService.ConvertToHtml(Message.Content))
+                </div>
                 <small class="message-time ">
                     @Message.Timestamp.ToString("HH:mm")
                 </small>
@@ -64,6 +68,124 @@
     .message-bubble.bot {
         background-color: #e9ecef;
         color: #333;
+    }
+
+    .message-text {
+        margin-bottom: 8px;
+    }
+
+    /* Estilos para elementos Markdown */
+    .message-text h1, .message-text h2, .message-text h3, 
+    .message-text h4, .message-text h5, .message-text h6 {
+        margin: 8px 0 4px 0;
+        font-weight: 600;
+    }
+
+    .message-text h1 { font-size: 1.2em; }
+    .message-text h2 { font-size: 1.15em; }
+    .message-text h3 { font-size: 1.1em; }
+    .message-text h4 { font-size: 1.05em; }
+    .message-text h5 { font-size: 1em; }
+    .message-text h6 { font-size: 0.95em; }
+
+    .message-text p {
+        margin: 4px 0;
+        line-height: 1.4;
+    }
+
+    .message-text ul, .message-text ol {
+        margin: 8px 0;
+        padding-left: 20px;
+    }
+
+    .message-text li {
+        margin: 2px 0;
+    }
+
+    .message-text code {
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+    }
+
+    .message-bubble.user .message-text code {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .message-text pre {
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 8px 12px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 8px 0;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+    }
+
+    .message-bubble.user .message-text pre {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .message-text blockquote {
+        border-left: 3px solid #ddd;
+        margin: 8px 0;
+        padding-left: 12px;
+        font-style: italic;
+    }
+
+    .message-bubble.user .message-text blockquote {
+        border-left-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .message-text table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 8px 0;
+        font-size: 0.9em;
+    }
+
+    .message-text th, .message-text td {
+        border: 1px solid #ddd;
+        padding: 4px 8px;
+        text-align: left;
+    }
+
+    .message-text th {
+        background-color: rgba(0, 0, 0, 0.1);
+        font-weight: 600;
+    }
+
+    .message-bubble.user .message-text th {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .message-text strong {
+        font-weight: 600;
+    }
+
+    .message-text em {
+        font-style: italic;
+    }
+
+    .message-text a {
+        color: inherit;
+        text-decoration: underline;
+    }
+
+    .message-bubble.user .message-text a {
+        color: #cce7ff;
+    }
+
+    .message-text hr {
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 12px 0;
+    }
+
+    .message-bubble.user .message-text hr {
+        border-top-color: rgba(255, 255, 255, 0.3);
     }
 
     .copy-btn {
