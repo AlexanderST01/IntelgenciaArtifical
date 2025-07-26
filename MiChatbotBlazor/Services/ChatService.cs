@@ -76,31 +76,7 @@ namespace MiChatbotBlazor.Services
             await _context.SaveChangesAsync();
 
             // Agregar mensaje de bienvenida con ejemplos de Markdown
-            var welcomeMessage = @"# ¡Hola! 👋
-
-Soy tu **asistente virtual** y ahora soporto **Markdown** para una mejor experiencia de chat.
-
-## ¿Qué puedo hacer?
-
-- Responder tus preguntas
-- Ayudarte con código
-- Dar formato rico a mis respuestas
-
-### Ejemplos de formato:
-
-**Texto en negrita**, *cursiva*, y `código inline`.
-
-```csharp
-// También puedo mostrar bloques de código
-public void Ejemplo()
-{
-    Console.WriteLine(""¡Hola mundo!"");
-}
-```
-
-> Y puedo hacer citas importantes como esta.
-
-¿En qué puedo ayudarte hoy?";
+            var welcomeMessage = @"# ¡Hola! Soy tu asistente virtual de IA. ¿En qué puedo ayudarte hoy?";
 
             await AddMessageAsync(session.Id, welcomeMessage, "bot");
 
