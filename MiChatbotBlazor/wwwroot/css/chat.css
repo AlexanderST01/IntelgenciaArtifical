@@ -58,6 +58,16 @@
     .message-bubble {
         max-width: 85%;
     }
+
+    /* Ajustes para código en móvil */
+    .message-text pre {
+        font-size: 0.8em;
+        overflow-x: auto;
+    }
+    
+    .message-text table {
+        font-size: 0.8em;
+    }
 }
 
 /* Dark mode support */
@@ -71,5 +81,35 @@
     .chat-container {
         background-color: var(--bg-color);
         color: var(--text-color);
+    }
+
+    /* Ajustes para Markdown en modo oscuro */
+    .message-bubble.bot {
+        background-color: #2d3748;
+        color: #e2e8f0;
+    }
+    
+    .message-text code {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .message-text pre {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .message-text th {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .message-text td {
+        border-color: #4a5568;
+    }
+    
+    .message-text blockquote {
+        border-left-color: #4a5568;
+    }
+    
+    .message-text hr {
+        border-top-color: #4a5568;
     }
 }

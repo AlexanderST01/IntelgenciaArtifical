@@ -75,10 +75,10 @@ namespace MiChatbotBlazor.Services
             _context.ChatSessions.Add(session);
             await _context.SaveChangesAsync();
 
-            // Agregar mensaje de bienvenida
-            await AddMessageAsync(session.Id, 
-                "¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?", 
-                "bot");
+            // Agregar mensaje de bienvenida con ejemplos de Markdown
+            var welcomeMessage = @"# ¡Hola! Soy tu asistente virtual de IA. ¿En qué puedo ayudarte hoy?";
+
+            await AddMessageAsync(session.Id, welcomeMessage, "bot");
 
             return session;
         }
