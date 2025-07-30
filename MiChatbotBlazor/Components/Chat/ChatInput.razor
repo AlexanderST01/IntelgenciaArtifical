@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components
 
 <div class="chat-input-container bg-white border-top p-3">
     <div class="input-group">
@@ -6,6 +7,7 @@
                class="form-control" 
                placeholder="Escribe tu mensaje aquí..."
                @bind="currentMessage"
+               @bind:event="oninput"
                @onkeypress="HandleKeyPress"
                disabled="@IsLoading" />
         
@@ -55,15 +57,22 @@
     {
         if (!string.IsNullOrWhiteSpace(currentMessage) && !IsLoading)
         {
-            var message = currentMessage;
+            var messageToSend = currentMessage.Trim();
+            
+            // Limpiar inmediatamente el input para evitar problemas de estado
             currentMessage = string.Empty;
-            await OnSendMessage.InvokeAsync(message);
+            
+            // Forzar actualización de la UI
+            StateHasChanged();
+            
+            // Enviar el mensaje
+            await OnSendMessage.InvokeAsync(messageToSend);
         }
     }
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
     {
-        if (e.Key == "Enter" && !e.ShiftKey)
+        if (e.Key == "Enter" && !e.ShiftKey && !IsLoading)
         {
             await HandleSendMessage();
         }
