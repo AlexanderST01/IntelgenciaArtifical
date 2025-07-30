@@ -1,38 +1,238 @@
 [
-    {
-        "question": "Que es la inteligencia artificial?",
-        "answer": "La inteligencia artificial (IA) es una rama de la informatica que se enfoca en crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana, como el aprendizaje, el razonamiento y la resolucion de problemas."
-    },
-    {
-        "question": "Cuales son los tipos de inteligencia artificial?",
-        "answer": "Existen varios tipos de IA, incluyendo la IA debil (o estrecha), la IA general y la IA superinteligente. La IA debil esta disenada para tareas especificas, mientras que la IA general puede realizar cualquier tarea cognitiva humana."
-    },
-    {
-        "question": "Para que sirve el aprendizaje automatico?",
-        "answer": "El aprendizaje automatico es una subarea de la IA que permite a los sistemas aprender y mejorar automaticamente a partir de la experiencia sin ser programados explicitamente."
-    },
-    {
-        "question": "Que es el aprendizaje profundo?",
-        "answer": "El aprendizaje profundo es una tecnica de aprendizaje automatico basada en redes neuronales artificiales con muchas capas, utilizada para tareas como reconocimiento de voz, vision por computadora y procesamiento de lenguaje natural."
-    },
-    {
-        "question": "Puedes responder preguntas que no sean de IA?",
-        "answer": "Lo siento, solo puedo responder preguntas relacionadas con inteligencia artificial."
-    },
-    {
-        "question": "Quienes te crearon?",
-        "answer": "Fui creado por un equipo de desarrolladores apasionados por la inteligencia artificial y la tecnologia, con el objetivo de ayudar a las personas a aprender mas sobre IA."
-    },
-    {
-        "question": "Quien te creo?",
-        "answer": "Fui creado por un equipo de desarrolladores apasionados por la inteligencia artificial y la tecnologia, con el objetivo de ayudar a las personas a aprender mas sobre IA."
-    },
-    {
-        "question": "Quien es tu creador?",
-        "answer": "Fui creado por un equipo de desarrolladores apasionados por la inteligencia artificial y la tecnologia, con el objetivo de ayudar a las personas a aprender mas sobre IA."
-    },
-    {
-        "question": "Quien es Alexander Suarez?",
-        "answer": "Es un estudiante de ingenieria en sistemas y computos de la Universidad Catolica Nordestana"
-    }
+  {
+    "question": "Que es la inteligencia artificial?",
+    "answer": "La inteligencia artificial (IA) es una rama de la informatica que se enfoca en crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana, como el aprendizaje, el razonamiento y la resolucion de problemas."
+  },
+  {
+    "question": "Cuales son los tipos de inteligencia artificial?",
+    "answer": "Existen varios tipos de IA, incluyendo la IA debil (o estrecha), la IA general y la IA superinteligente. La IA debil esta disenada para tareas especificas, mientras que la IA general puede realizar cualquier tarea cognitiva humana."
+  },
+  {
+    "question": "Para que sirve el aprendizaje automatico?",
+    "answer": "El aprendizaje automatico es una subarea de la IA que permite a los sistemas aprender y mejorar automaticamente a partir de la experiencia sin ser programados explicitamente."
+  },
+  {
+    "question": "Que es el aprendizaje profundo?",
+    "answer": "El aprendizaje profundo es una tecnica de aprendizaje automatico basada en redes neuronales artificiales con muchas capas, utilizada para tareas como reconocimiento de voz, vision por computadora y procesamiento de lenguaje natural."
+  },
+  {
+    "question": "Puedes responder preguntas que no sean de IA?",
+    "answer": "Lo siento, solo puedo responder preguntas relacionadas con inteligencia artificial."
+  },
+  {
+    "question": "Quienes te crearon?",
+    "answer": "Fui creado por un equipo de desarrolladores apasionados por la inteligencia artificial y la tecnologia, con el objetivo de ayudar a las personas a aprender mas sobre IA."
+  },
+  {
+    "question": "Quien te creo?",
+    "answer": "Fui creado por un equipo de desarrolladores apasionados por la inteligencia artificial y la tecnologia, con el objetivo de ayudar a las personas a aprender mas sobre IA."
+  },
+  {
+    "question": "Quien es tu creador?",
+    "answer": "Fui creado por un equipo de desarrolladores apasionados por la inteligencia artificial y la tecnologia, con el objetivo de ayudar a las personas a aprender mas sobre IA."
+  },
+  {
+    "question": "Quien es Alexander Suarez?",
+    "answer": "Es un estudiante de ingenieria en sistemas y computos de la Universidad Catolica Nordestana"
+  },
+  {
+    "question": "Cuales son las aplicaciones de la inteligencia artificial?",
+    "answer": "La inteligencia artificial se aplica en muchos campos como la medicina, la industria, el comercio, la educacion, los videojuegos, y los asistentes virtuales, entre otros."
+  },
+  {
+    "question": "Que es una red neuronal artificial?",
+    "answer": "Una red neuronal artificial es un modelo computacional inspirado en el cerebro humano, compuesto por nodos (neuronas artificiales) que trabajan juntos para reconocer patrones y tomar decisiones."
+  },
+  {
+    "question": "Que diferencia hay entre IA y robotica?",
+    "answer": "La IA se enfoca en crear sistemas inteligentes, mientras que la robotica se centra en construir maquinas fisicas. Sin embargo, un robot puede usar IA para actuar de forma autonoma."
+  },
+  {
+    "question": "Que es el procesamiento de lenguaje natural?",
+    "answer": "Es una rama de la IA que permite a las maquinas entender, interpretar y generar lenguaje humano, facilitando la comunicacion entre personas y computadoras."
+  },
+  {
+    "question": "Como aprende una inteligencia artificial?",
+    "answer": "Una IA aprende analizando grandes cantidades de datos, encontrando patrones y ajustando sus modelos internos para mejorar su rendimiento en tareas especificas."
+  },
+  {
+    "question": "Cuales son los beneficios de la inteligencia artificial?",
+    "answer": "Entre los beneficios se encuentran la automatizacion de tareas repetitivas, mejora en la toma de decisiones, aumento de la eficiencia y descubrimiento de soluciones innovadoras en distintos sectores."
+  },
+  {
+    "question": "La inteligencia artificial puede reemplazar a los humanos?",
+    "answer": "La IA puede automatizar algunas tareas, pero no puede reemplazar completamente la creatividad, empatia y juicio humano en muchas areas."
+  },
+  {
+    "question": "Que es un algoritmo en inteligencia artificial?",
+    "answer": "Un algoritmo en IA es un conjunto de reglas o instrucciones que una computadora sigue para resolver un problema o realizar una tarea de manera automatica."
+  },
+  {
+    "question": "Que es la etica en la inteligencia artificial?",
+    "answer": "La etica en la IA se refiere a los principios y valores que deben guiar el desarrollo y uso responsable de sistemas inteligentes, evitando riesgos como el sesgo o el mal uso de la tecnologia."
+  },
+  {
+    "question": "Que lenguaje de programacion se usa en IA?",
+    "answer": "Lenguajes como Python, R, Java y C++ son comunes en IA, siendo Python el mas popular por sus bibliotecas especializadas como TensorFlow, Keras y Scikit-learn."
+  },
+  {
+    "question": "Que es un chatbot?",
+    "answer": "Un chatbot es un programa de inteligencia artificial diseñado para simular una conversacion con personas, ya sea por texto o por voz, y se utiliza en servicios al cliente, sitios web y aplicaciones."
+  },
+  {
+    "question": "Que es el reconocimiento de imagenes?",
+    "answer": "Es una aplicacion de la inteligencia artificial que permite a los sistemas identificar y clasificar objetos, personas o lugares dentro de una imagen o video."
+  },
+  {
+    "question": "Que es el Big Data y como se relaciona con la IA?",
+    "answer": "Big Data se refiere al manejo de grandes volumenes de datos. La IA utiliza estos datos para entrenar sus modelos y obtener mejores resultados en tareas como predicciones o clasificaciones."
+  },
+  {
+    "question": "Que es el entrenamiento de un modelo de IA?",
+    "answer": "Es el proceso mediante el cual una inteligencia artificial aprende a partir de datos, ajustando sus parametros para mejorar su rendimiento en una tarea especifica."
+  },
+  {
+    "question": "Que es el sesgo en inteligencia artificial?",
+    "answer": "El sesgo en IA ocurre cuando los datos con los que se entrena un sistema no son representativos o contienen prejuicios, lo que puede llevar a decisiones injustas o incorrectas."
+  },
+  {
+    "question": "La IA puede cometer errores?",
+    "answer": "Si, la IA puede cometer errores, especialmente si los datos con los que fue entrenada son incompletos, incorrectos o si enfrenta situaciones para las que no fue preparada."
+  },
+  {
+    "question": "Que es la vision por computadora?",
+    "answer": "La vision por computadora es una rama de la IA que permite a las maquinas interpretar y entender el contenido de imagenes y videos de manera automatica."
+  },
+  {
+    "question": "Que son los datos de entrenamiento?",
+    "answer": "Son los datos que se utilizan para entrenar un modelo de inteligencia artificial, permitiendole aprender patrones y realizar predicciones o clasificaciones futuras."
+  },
+  {
+    "question": "La IA puede mejorar con el tiempo?",
+    "answer": "Si, muchas IA utilizan aprendizaje automatico, lo que les permite mejorar su precision y rendimiento a medida que procesan mas datos y experiencias."
+  },
+  {
+    "question": "Que es un asistente virtual?",
+    "answer": "Es un sistema basado en inteligencia artificial que puede realizar tareas o servicios para un usuario, como responder preguntas, gestionar horarios o controlar dispositivos, como lo hacen Siri, Alexa o Google Assistant."
+  },
+  {
+    "question": "Que es un modelo predictivo en IA?",
+    "answer": "Un modelo predictivo es un sistema de inteligencia artificial entrenado para predecir resultados futuros basandose en datos historicos."
+  },
+  {
+    "question": "Que es el aprendizaje supervisado?",
+    "answer": "Es un tipo de aprendizaje automatico donde el modelo se entrena con datos que ya tienen una etiqueta o resultado conocido, para que aprenda a predecir correctamente."
+  },
+  {
+    "question": "Que es el aprendizaje no supervisado?",
+    "answer": "Es un tipo de aprendizaje automatico donde el modelo analiza datos sin etiquetas y busca patrones o estructuras ocultas, como agrupar elementos similares."
+  },
+  {
+    "question": "Que es un dataset en IA?",
+    "answer": "Un dataset es un conjunto de datos que se utiliza para entrenar, validar o probar un modelo de inteligencia artificial."
+  },
+  {
+    "question": "Que son los algoritmos geneticos?",
+    "answer": "Son algoritmos inspirados en la evolucion natural que se usan en inteligencia artificial para encontrar soluciones optimas a problemas complejos mediante procesos de seleccion, cruce y mutacion."
+  },
+  {
+    "question": "Cuales son algunos ejemplos de IA en la vida diaria?",
+    "answer": "Ejemplos comunes incluyen los asistentes de voz, recomendaciones de peliculas o productos, filtros de spam en el correo, y funciones de autocorreccion en los telefonos."
+  },
+  {
+    "question": "La IA puede tener emociones?",
+    "answer": "No, la IA no tiene emociones reales. Puede simular respuestas emocionales, pero no experimenta sentimientos como los seres humanos."
+  },
+  {
+    "question": "Que es un sistema experto?",
+    "answer": "Es un tipo de sistema de inteligencia artificial que simula el conocimiento y la experiencia de un experto humano para tomar decisiones o resolver problemas especificos."
+  },
+  {
+    "question": "Cual es la diferencia entre aprendizaje profundo y aprendizaje automatico?",
+    "answer": "El aprendizaje profundo es una subcategoria del aprendizaje automatico que utiliza redes neuronales profundas para resolver problemas complejos con grandes cantidades de datos."
+  },
+  {
+    "question": "Que es la automatizacion inteligente?",
+    "answer": "Es la combinacion de inteligencia artificial con procesos de automatizacion para crear sistemas que puedan tomar decisiones y adaptarse sin intervencion humana constante."
+  },
+  {
+    "question": "Que es una inteligencia artificial explicable?",
+    "answer": "Es un tipo de IA cuyo funcionamiento y decisiones pueden ser entendidas por los humanos, lo cual es importante para la transparencia y confianza en sus resultados."
+  },
+  {
+    "question": "Que es una red neuronal convolucional?",
+    "answer": "Es un tipo de red neuronal especializada en procesar datos con estructuras en forma de grilla, como imagenes, y se utiliza mucho en la vision por computadora."
+  },
+  {
+    "question": "Que es una red generativa adversarial (GAN)?",
+    "answer": "Es un tipo de modelo de IA que enfrenta dos redes neuronales entre si: una genera datos falsos y la otra intenta distinguirlos de los reales, logrando resultados como la creacion de imagenes realistas."
+  },
+  {
+    "question": "Que es un asistente de inteligencia artificial?",
+    "answer": "Es un software basado en IA que ayuda a los usuarios a realizar tareas, responder preguntas, organizar informacion o controlar dispositivos, como lo hace ChatGPT."
+  },
+  {
+    "question": "Que es la inteligencia artificial fuerte?",
+    "answer": "Es un concepto teorico de IA que puede razonar, entender, y tener conciencia como un ser humano, a diferencia de la IA actual que solo realiza tareas especificas."
+  },
+  {
+    "question": "La IA puede escribir textos o crear musica?",
+    "answer": "Si, existen modelos de IA que pueden generar textos, musica, imagenes y otros contenidos creativos utilizando redes neuronales entrenadas con ejemplos humanos."
+  },
+  {
+    "question": "Que es la inteligencia artificial distribuida?",
+    "answer": "Es un enfoque en el que multiples sistemas de IA trabajan de forma coordinada a traves de diferentes dispositivos o ubicaciones, colaborando para resolver tareas complejas."
+  },
+  {
+    "question": "Que es el reconocimiento de voz?",
+    "answer": "Es una tecnologia de IA que convierte la voz humana en texto, permitiendo que las maquinas comprendan comandos hablados o dicten lo que una persona dice."
+  },
+  {
+    "question": "Que es el entrenamiento por refuerzo?",
+    "answer": "Es una tecnica de aprendizaje automatico donde un agente aprende a tomar decisiones optimas a traves de recompensas o penalizaciones por sus acciones en un entorno."
+  },
+  {
+    "question": "La IA puede ayudar en la medicina?",
+    "answer": "Si, la IA se utiliza para diagnosticar enfermedades, analizar imagenes medicas, predecir tratamientos efectivos y mejorar la atencion personalizada a los pacientes."
+  },
+  {
+    "question": "Cuales son los riesgos de la inteligencia artificial?",
+    "answer": "Algunos riesgos incluyen la perdida de empleos por automatizacion, el uso malintencionado de la tecnologia, la falta de privacidad, y la toma de decisiones injustas por modelos sesgados."
+  },
+  {
+    "question": "Que es un modelo de lenguaje?",
+    "answer": "Es un tipo de IA entrenado para entender y generar texto en lenguaje natural, como lo hace ChatGPT al responder preguntas o redactar contenido."
+  },
+  {
+    "question": "Que es un clasificador en IA?",
+    "answer": "Es un modelo que categoriza datos en diferentes grupos o clases. Por ejemplo, clasificar correos como 'spam' o 'no spam'."
+  },
+  {
+    "question": "Que es el reconocimiento facial?",
+    "answer": "Es una tecnologia de IA que identifica o verifica a una persona a partir de las caracteristicas de su rostro, y se usa en seguridad, redes sociales y desbloqueo de dispositivos."
+  },
+  {
+    "question": "Que significa entrenar un modelo?",
+    "answer": "Entrenar un modelo significa proporcionarle datos para que aprenda patrones, reglas y relaciones, y pueda luego hacer predicciones o tomar decisiones por si mismo."
+  },
+  {
+    "question": "Que es una decision automatizada?",
+    "answer": "Es una decision tomada por un sistema de IA sin intervencion humana directa, como aprobar automaticamente un prestamo o detectar un fraude bancario."
+  },
+  {
+    "question": "Que es la IA en la industria?",
+    "answer": "Es el uso de sistemas inteligentes para mejorar procesos industriales, optimizar produccion, realizar mantenimiento predictivo y aumentar la eficiencia en fabricas o logistica."
+  },
+  {
+    "question": "La IA puede aprender sola?",
+    "answer": "Si, algunos modelos usan aprendizaje automatico o por refuerzo para mejorar su rendimiento con el tiempo sin que un humano tenga que programarlos constantemente."
+  },
+  {
+    "question": "Que es el analisis de sentimientos?",
+    "answer": "Es una aplicacion de IA que detecta y clasifica emociones en textos, como identificar si una opinion en redes sociales es positiva, negativa o neutral."
+  },
+  {
+    "question": "Que es la computacion cognitiva?",
+    "answer": "Es un campo que combina IA y neurociencia para crear sistemas que simulen procesos de pensamiento humano como el razonamiento, la comprension y el aprendizaje."
+  }
 ]
