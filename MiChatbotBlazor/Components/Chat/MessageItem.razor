@@ -2,6 +2,7 @@
 @using MessageModel = MiChatbotBlazor.Data.Models.ChatMessage
 @using MiChatbotBlazor.Services
 @inject IMarkdownService MarkdownService
+@inject ITimeZoneService TimeZoneService
 
 <div class="message-wrapper mb-3 @(Message.Sender == "user" ? "text-end" : "text-start")">
     <div class="d-flex @(Message.Sender == "user" ? "justify-content-end" : "justify-content-start")">
@@ -20,7 +21,7 @@
                     @((MarkupString)MarkdownService.ConvertToHtml(Message.Content))
                 </div>
                 <small class="message-time ">
-                    @Message.Timestamp.ToString("HH:mm")
+                    @TimeZoneService.FormatMessageTime(Message.Timestamp)
                 </small>
                 
                 @if (Message.Sender == "bot")

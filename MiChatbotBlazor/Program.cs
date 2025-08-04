@@ -22,6 +22,7 @@ builder.Services.AddScoped<IAIService, MistralService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddSingleton<SessionStateService>();
 builder.Services.AddScoped<IMarkdownService, MarkdownService>();
+builder.Services.AddScoped<ITimeZoneService, TimeZoneService>();
 
 // KnowledgeBaseService como singleton
 var kbPath = Path.Combine(AppContext.BaseDirectory, "Data", "knowledge_base.json");
