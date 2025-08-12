@@ -4,6 +4,7 @@
 @inject IAIService AIService
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
+@inject SessionStateService SessionState
 
 <div class="chat-container d-flex flex-column h-100">
     <!-- Header -->
@@ -187,6 +188,8 @@
         var newSession = await ChatService.CreateSessionAsync("demo", "Nueva Conversación");
         SessionId = newSession.Id;
         await LoadMessages();
+
+        SessionState.NotifySessionsUpdated(); // Notificar que la lista cambió
     }
 
     private async Task CopyToClipboard(string text)

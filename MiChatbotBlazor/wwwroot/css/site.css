@@ -66,3 +66,43 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+/* Modal genérico por encima de cualquier header/sidebar */
+.modal-overlay {
+    position: fixed;
+    inset: 0; /* top:0; right:0; bottom:0; left:0 */
+    background: rgba(0,0,0,.5);
+    z-index: 2000; /* > 1050 de tu topbar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-container {
+    background: #1e1e1e;
+    color: #fff;
+    border: 1px solid #495057;
+    border-radius: .5rem;
+    width: calc(100% - 2rem);
+    max-width: 520px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.6);
+    position: relative;
+    z-index: 2001; /* por encima del overlay */
+}
+
+.btn-group-xs > .btn {
+    padding: .15rem .4rem;
+    line-height: 1;
+}
+
+.session-item .text-truncate {
+    max-width: 100%;
+}
+
+.btn-group-vertical > .btn {
+    margin-bottom: 4px; /* espacio entre botones */
+}
+
+    .btn-group-vertical > .btn:last-child {
+        margin-bottom: 0; /* quita espacio al último */
+    }

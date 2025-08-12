@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using MiChatbotBlazor.Data;
 using MiChatbotBlazor.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MiChatbotBlazor.Services
 {
@@ -21,8 +21,8 @@ namespace MiChatbotBlazor.Services
                 .FirstOrDefaultAsync();
 
             return session?.Id ?? 0;
-        }  
-        
+        }
+
         public async Task<List<ChatSession>> GetChatsSessionsAsync(string userId)
         {
             return await _context.ChatSessions
@@ -50,7 +50,7 @@ namespace MiChatbotBlazor.Services
             };
 
             _context.ChatMessages.Add(message);
-            
+
             // Actualizar timestamp de la sesión
             var session = await _context.ChatSessions.FindAsync(sessionId);
             if (session != null)
@@ -107,5 +107,17 @@ namespace MiChatbotBlazor.Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateSessionTitleAsync(int sessionId, string newTitle)
+        {
+            var session = await _context.ChatSessions.FindAsync(sessionId);
+            if (session is null) return;
+
+            session.Title = string.IsNullOrWhiteSpace(newTitle) ? session.Title : newTitle.Trim();
+            session.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+        }
+
+
     }
 }
