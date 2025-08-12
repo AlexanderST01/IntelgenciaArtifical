@@ -234,5 +234,53 @@
   {
     "question": "Que es la computacion cognitiva?",
     "answer": "Es un campo que combina IA y neurociencia para crear sistemas que simulen procesos de pensamiento humano como el razonamiento, la comprension y el aprendizaje."
+  },
+  {
+    "question": "Que es la prueba de Turing?",
+    "answer": "La prueba de Turing, propuesta por Alan Turing en 1950, es un experimento que evalua si una maquina puede mostrar un comportamiento inteligente indistinguible del de un ser humano."
+  },
+  {
+    "question": "Que es la IA explicativa?",
+    "answer": "La IA explicativa es un enfoque que busca que los sistemas de inteligencia artificial puedan justificar y detallar de forma clara como llegaron a una decision o prediccion."
+  },
+  {
+    "question": "Que es el aprendizaje auto-supervisado?",
+    "answer": "Es un metodo de entrenamiento de modelos de IA en el que los datos no estan etiquetados, pero el propio sistema genera etiquetas o objetivos a partir de los datos mismos."
+  },
+  {
+    "question": "Que es un transformer en inteligencia artificial?",
+    "answer": "Un transformer es una arquitectura de red neuronal que utiliza mecanismos de atencion para procesar secuencias de datos, y es la base de modelos de lenguaje como GPT."
+  },
+  {
+    "question": "Que es un agente conversacional?",
+    "answer": "Es un programa de IA diseñado para interactuar con usuarios a traves de texto o voz, manteniendo conversaciones naturales y contextuales."
+  },
+  {
+    "question": "Que es la interpretabilidad en modelos de IA?",
+    "answer": "Es la capacidad de comprender como un modelo de inteligencia artificial toma sus decisiones, lo que facilita la confianza y el control humano sobre el sistema."
+  },
+  {
+    "question": "Que es la inteligencia artificial cuántica?",
+    "answer": "Es un campo que combina la computacion cuantica con la inteligencia artificial para acelerar el procesamiento de datos y resolver problemas complejos de forma mas eficiente."
+  },
+  {
+    "question": "Que es una red neuronal recurrente?",
+    "answer": "Es un tipo de red neuronal diseñada para procesar secuencias de datos, como texto o audio, utilizando conexiones que permiten que la informacion fluya de una etapa a otra conservando contexto."
+  },
+  {
+    "question": "Que diferencia hay entre IA simbolica y conexionista?",
+    "answer": "La IA simbolica utiliza reglas y representaciones logicas para razonar, mientras que la conexionista, como las redes neuronales, aprende patrones a partir de datos sin reglas predefinidas."
+  },
+  {
+    "question": "Que es un grafo de conocimiento?",
+    "answer": "Es una estructura de datos que organiza informacion en nodos y relaciones, permitiendo que una IA entienda y razone sobre conexiones entre conceptos."
+  },
+  {
+    "question": "Que es el procesamiento de imagenes en IA?",
+    "answer": "Es el uso de tecnicas y algoritmos para analizar, modificar o extraer informacion de imagenes digitales, permitiendo aplicaciones como filtros, mejoras y reconocimiento."
+  },
+  {
+    "question": "Que es el reconocimiento de patrones?",
+    "answer": "Es la capacidad de un sistema de IA para identificar regularidades y estructuras en datos, como formas, sonidos o secuencias, y utilizarlos para clasificar o predecir."
   }
 ]
