@@ -194,10 +194,22 @@
 
     private async Task CopyToClipboard(string text)
     {
-        if (hasRendered)
+        if (hasRendered && !string.IsNullOrEmpty(text))
         {
-            await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
-            // Mostrar notificación de copiado (implementar)
+            try
+            {
+                var success = await JSRuntime.InvokeAsync<bool>("copyToClipboard", text);
+                if (!success)
+                {
+                    Console.WriteLine("Falló la operación de copiado");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al copiar al portapapeles: {ex.Message}");
+                // Mostrar notificación de error al usuario si es necesario
+                await JSRuntime.InvokeVoidAsync("showCopyNotification", "Error al copiar el mensaje", true);
+            }
         }
     }
 
