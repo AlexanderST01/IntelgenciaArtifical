@@ -362,3 +362,11 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /ProyectoFinalDotNet8/ProyectoFinalDotNet8/Data/ProyectoFinalDotNet8.Db-shm
+
+# Excluir carpetas bin/ y obj/ y su contenido
+[Bb]in/
+[Oo]bj/
+bin/
+obj/
+**/bin/
+**/obj/
