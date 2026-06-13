@@ -1,19 +1,70 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
+@inject SessionStateService SessionState
+@implements IDisposable
 
-<PageTitle>MiChatbotBlazor</PageTitle>
+<PageTitle>Mi Chatbot</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+<div class="app-layout @(isSidebarCollapsed ? "sidebar-collapsed" : "") @(isMobileOpen ? "sidebar-mobile-open" : "")">
+    <div class="sidebar-wrapper">
+        <NavMenu OnToggleSidebar="ToggleSidebar" OnCloseMobileSidebar="CloseMobileSidebar" IsCollapsed="isSidebarCollapsed" />
     </div>
 
-    <main>
-    @*     <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div> *@
+    <!-- Mobile Overlay -->
+    @if (isMobileOpen)
+    {
+        <div class="mobile-overlay" @onclick="CloseMobileSidebar"></div>
+    }
 
-        <article class="content px-4">
+    <main class="main-content">
+        @if (isSidebarCollapsed)
+        {
+            <!-- Floating button to expand sidebar when collapsed (Desktop) -->
+            <button class="btn-sidebar-toggle expand-btn d-none d-md-flex" @onclick="ToggleSidebar" title="Mostrar panel lateral">
+                <i class="bi bi-layout-sidebar-inset"></i>
+            </button>
+        }
+        <article class="content-area">
             @Body
         </article>
     </main>
 </div>
+
+@code {
+    private bool isSidebarCollapsed = false;
+    private bool isMobileOpen = false;
+
+    protected override void OnInitialized()
+    {
+        SessionState.SessionChanged += OnSessionChanged;
+        SessionState.MobileSidebarToggleRequested += OnMobileSidebarToggleRequested;
+    }
+
+    private void OnSessionChanged(int sessionId)
+    {
+        // Cerrar sidebar en móvil al cambiar de chat
+        isMobileOpen = false;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void OnMobileSidebarToggleRequested()
+    {
+        isMobileOpen = !isMobileOpen;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void ToggleSidebar()
+    {
+        isSidebarCollapsed = !isSidebarCollapsed;
+    }
+
+    private void CloseMobileSidebar()
+    {
+        isMobileOpen = false;
+    }
+
+    public void Dispose()
+    {
+        SessionState.SessionChanged -= OnSessionChanged;
+        SessionState.MobileSidebarToggleRequested -= OnMobileSidebarToggleRequested;
+    }
+}
