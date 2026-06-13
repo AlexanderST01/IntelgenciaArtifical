@@ -1,15 +1,17 @@
-namespace MiChatbotBlazor.Services
+﻿namespace MiChatbotBlazor.Services
 {
     public class SessionStateService
     {
         private int _currentSessionId;
-        
+
         public event Action<int>? SessionChanged;
-        
-        public int CurrentSessionId 
-        { 
+        public event Action? SessionsUpdated;
+        public event Action? MobileSidebarToggleRequested;
+
+        public int CurrentSessionId
+        {
             get => _currentSessionId;
-            private set 
+            private set
             {
                 if (_currentSessionId != value)
                 {
@@ -18,10 +20,20 @@ namespace MiChatbotBlazor.Services
                 }
             }
         }
-        
+
         public void SetCurrentSession(int sessionId)
         {
             CurrentSessionId = sessionId;
+        }
+
+        public void NotifySessionsUpdated()
+        {
+            SessionsUpdated?.Invoke();
+        }
+
+        public void RequestToggleMobileSidebar()
+        {
+            MobileSidebarToggleRequested?.Invoke();
         }
     }
 }

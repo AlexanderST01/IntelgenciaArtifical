@@ -35,7 +35,13 @@ public class MistralService : IAIService
 
     public async Task<string> GetResponseAsync(string userMessage, List<dynamic> conversationHistory)
     {
-        // 1. Preparar knowledge base para el prompt
+        // 1. Verificar primero si la pregunta está relacionada con IA
+        if (!IsAIRelatedQuestion(userMessage))
+        {
+            return "Lo siento, solo puedo responder preguntas relacionadas con inteligencia artificial. ¿Tienes alguna pregunta sobre IA, machine learning, redes neuronales, o temas similares?";
+        }
+
+        // 2. Preparar knowledge base para el prompt
         var faqs = _kbService.GetAllFAQs();
         var faqsText = string.Join("\n", faqs.Select(f => $"P: {f.question}\nR: {f.answer}"));
 
@@ -45,21 +51,28 @@ public class MistralService : IAIService
         Console.WriteLine($"[DEBUG] User question: {userMessage}");
         Console.WriteLine($"[DEBUG] Conversation history count: {conversationHistory.Count}");
 
-        // 2. Prompt más específico para Mistral
-        var systemPrompt = $@"Eres un asistente virtual experto en inteligencia artificial.
+        // 3. Prompt más específico para Mistral
+        var systemPrompt = $@"Eres un asistente virtual EXCLUSIVAMENTE especializado en inteligencia artificial.
 
-IMPORTANTE: Tienes una base de conocimiento específica que DEBES PRIORIZAR. Si encuentras una coincidencia exacta o muy similar en estas preguntas, responde EXACTAMENTE con la respuesta proporcionada:
+RESTRICCIÓN IMPORTANTE: SOLO puedes responder preguntas sobre inteligencia artificial, machine learning, redes neuronales, algoritmos de IA, aplicaciones de IA, y temas directamente relacionados.
+
+TIENES UNA BASE DE CONOCIMIENTO ESPECÍFICA que DEBES PRIORIZAR:
 
 {faqsText}
 
-INSTRUCCIONES:
-1. Si la pregunta del usuario coincide exactamente con alguna de las preguntas de arriba, responde con la respuesta exacta.
-2. Si la pregunta es muy similar (misma intención), usa la respuesta proporcionada.
-3. Solo si NO hay coincidencia, responde como experto en IA.
-4. Siempre responde en español.
-5. Mantén el contexto de la conversación previa.
+INSTRUCCIONES ESTRICTAS:
+1. Si la pregunta coincide exactamente con alguna de las preguntas de arriba, responde EXACTAMENTE con la respuesta proporcionada.
+2. Si la pregunta es muy similar (misma intención sobre IA), usa la respuesta proporcionada como base.
+3. Solo si NO hay coincidencia PERO la pregunta SÍ es sobre IA, responde como experto en IA.
+4. Si la pregunta NO es sobre inteligencia artificial, responde con el mensaje de restricción.
+5. Siempre responde en español.
+6. Mantén el contexto de la conversación previa SOLO si es relevante para IA.
 
-Analiza cuidadosamente la pregunta del usuario y busca coincidencias en tu base de conocimiento.";
+Temas que SÍ puedes responder: IA, machine learning, deep learning, redes neuronales, algoritmos, modelos predictivos, procesamiento de lenguaje natural, visión por computadora, robótica con IA, chatbots, automatización inteligente, ética en IA.
+
+Temas que NO puedes responder: política, deportes, cocina, viajes, música no relacionada con IA, historia no tecnológica, salud general, finanzas personales, entretenimiento, etc.
+
+Analiza cuidadosamente si la pregunta está relacionada con inteligencia artificial.";
 
         try
         {
@@ -130,6 +143,115 @@ Analiza cuidadosamente la pregunta del usuario y busca coincidencias en tu base 
             Console.WriteLine($"Stack trace: {ex.StackTrace}");
             return "Lo siento, ocurrió un error inesperado.";
         }
+    }
+
+    private bool IsAIRelatedQuestion(string userMessage)
+    {
+        // Convertir a minúsculas para comparación
+        var message = userMessage.ToLower();
+        
+        // Primero verificar palabras que definitivamente NO son de IA
+        var nonAIKeywords = new[]
+        {
+            // Temas generales que no son IA
+            "cocina", "receta", "comida", "cocinar", "ingrediente",
+            "deporte", "futbol", "fútbol", "basketball", "tenis", "natacion", "natación",
+            "clima", "tiempo", "lluvia", "sol", "temperatura", "meteorologia", "meteorología",
+            "musica", "música", "cancion", "canción", "banda", "artista", "concierto",
+            "pelicula", "película", "actor", "actriz", "cine", "serie", "television", "televisión",
+            "politica", "política", "gobierno", "presidente", "eleccion", "elección", "partido politico",
+            "religion", "religión", "dios", "iglesia", "biblia", "rezar", "orar",
+            "chiste", "broma", "humor", "gracioso", "risa", "comico", "cómico",
+            "saludo", "hola", "buenos dias", "buenas noches", "como estas", "cómo estás",
+            "amor", "relacion", "relación", "pareja", "cita", "noviazgo", "matrimonio",
+            "viaje", "turismo", "hotel", "avion", "avión", "vacacion", "vacación", "playa",
+            "dinero", "banco", "prestamo", "préstamo", "inversion", "inversión", "bolsa", "acciones",
+            "medicina", "doctor", "enfermedad", "dolor", "sintoma", "síntoma", "hospital",
+            "historia", "guerra", "rey", "reina", "imperio", "batalla", "antiguo",
+            "geografia", "geografía", "pais", "país", "ciudad", "capital", "continente"
+        };
+        
+        // Si contiene términos que definitivamente no son de IA, rechazar inmediatamente
+        foreach (var keyword in nonAIKeywords)
+        {
+            if (message.Contains(keyword))
+            {
+                return false;
+            }
+        }
+        
+        // Palabras clave relacionadas con IA
+        var aiKeywords = new[]
+        {
+            // IA básica
+            "inteligencia artificial", "ia", "ai", "artificial intelligence",
+            "machine learning", "aprendizaje automatico", "aprendizaje automático",
+            "deep learning", "aprendizaje profundo",
+            
+            // Conceptos técnicos
+            "red neuronal", "redes neuronales", "neural network", "neurona artificial",
+            "algoritmo", "modelo", "entrenamiento", "datos", "dataset", "prediccion", "predicción",
+            "clasificacion", "clasificación", "regresion", "regresión", "clustering",
+            
+            // Aplicaciones de IA
+            "chatbot", "bot", "asistente virtual", "vision por computadora", "computer vision",
+            "procesamiento de lenguaje natural", "nlp", "reconocimiento", "automatizacion", "automatización",
+            
+            // Tecnologías específicas
+            "tensorflow", "pytorch", "keras", "scikit-learn", "python", "opencv",
+            "big data", "data science", "ciencia de datos", "mineria de datos",
+            
+            // Conceptos avanzados
+            "gan", "transformer", "bert", "gpt", "lstm", "cnn", "rnn",
+            "reinforcement learning", "aprendizaje por refuerzo", "supervised learning",
+            "unsupervised learning", "semi-supervised", "transfer learning",
+            
+            // Ética y sociedad
+            "sesgo", "bias", "etica", "ética", "explicabilidad", "transparencia",
+            "superinteligencia", "singularidad", "agi",
+            
+            // Industrias y aplicaciones
+            "robótica", "robotica", "robot", "drone", "vehiculo autonomo", "vehículo autónomo",
+            "medicina artificial", "diagnostico", "diagnóstico", "recomendador",
+            
+            // Prompt engineering y LLMs
+            "prompt", "llm", "gpt", "chatgpt", "language model", "modelo de lenguaje"
+        };
+        
+        // Verificar si contiene alguna palabra clave de IA
+        foreach (var keyword in aiKeywords)
+        {
+            if (message.Contains(keyword))
+            {
+                return true;
+            }
+        }
+        
+        // También verificar si la pregunta está en la knowledge base
+        var faqs = _kbService.GetAllFAQs();
+        foreach (var faq in faqs)
+        {
+            // Si la pregunta es muy similar a alguna en la KB, probablemente sea de IA
+            if (CalculateSimilarity(message, faq.question.ToLower()) > 0.6)
+            {
+                return true;
+            }
+        }
+        
+        // Si no encuentra coincidencias claras, por defecto rechazar (más restrictivo)
+        return false;
+    }
+    
+    private double CalculateSimilarity(string text1, string text2)
+    {
+        // Implementación simple de similitud basada en palabras comunes
+        var words1 = text1.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var words2 = text2.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        
+        var commonWords = words1.Intersect(words2).Count();
+        var totalWords = words1.Union(words2).Count();
+        
+        return totalWords == 0 ? 0 : (double)commonWords / totalWords;
     }
 
     // Clases para deserialización de Mistral

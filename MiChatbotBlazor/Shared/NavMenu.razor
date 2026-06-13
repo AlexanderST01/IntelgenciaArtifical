@@ -1,146 +1,263 @@
-﻿@inject MiChatbotBlazor.Services.IChatService ChatService
+@inject MiChatbotBlazor.Services.IChatService ChatService
 @inject NavigationManager Navigation
 @inject SessionStateService SessionState
+@implements IDisposable
 
+@if (showDeleteConfirm)
+{
+    <div class="modal-overlay" role="dialog" aria-modal="true" @onclick="CancelDelete">
+        <div class="modal-container" @onclick:stopPropagation="true">
+            <div class="modal-header d-flex align-items-center justify-content-between p-3">
+                <h5 class="modal-title m-0 fw-semibold">Eliminar conversación</h5>
+                <button type="button" class="btn-close" aria-label="Close" @onclick="CancelDelete"></button>
+            </div>
 
-<!-- Mobile Topbar (visible only on mobile) -->
-<div class="d-md-none bg-dark w-100 position-fixed top-0 start-0" style="z-index: 1050;">
-    <div class="d-flex align-items-center justify-content-between p-3 border-bottom border-secondary">
-        <span class="fs-5 fw-semibold text-white">Sesiones de Chat</span>
-        <button class="btn btn-dark border-0" @onclick="ToggleNavMenu" type="button">
-            <span class="text-white">
-                @if (collapseNavMenu)
-                {
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                    </svg>
-                }
-                else
-                {
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                }
-            </span>
+            <div class="modal-body p-4">
+                <p class="mb-2">¿Seguro que deseas eliminar <strong>@sessionToDeleteTitle</strong>?</p>
+                <small class="text-muted">Esta acción borrará definitivamente esta conversación y su historial.</small>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-end gap-2 p-3">
+                <button class="btn btn-outline-secondary" @onclick="CancelDelete">Cancelar</button>
+                <button class="btn btn-danger" @onclick="ConfirmDelete">Eliminar</button>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="sidebar-container h-100">
+    <!-- Header -->
+    <div class="sidebar-header">
+        <h2 class="sidebar-title">
+            <i class="bi bi-chat-square-text-fill"></i>
+            <span>Conversaciones</span>
+        </h2>
+        <button class="btn-sidebar-toggle-inner d-none d-md-flex" @onclick="OnToggleSidebar" title="Ocultar panel lateral">
+            <i class="bi bi-layout-sidebar-inset-reverse"></i>
         </button>
     </div>
-    
-    <!-- Mobile Dropdown Menu -->
-    <div class="@(collapseNavMenu ? "d-none" : "d-block") bg-dark border-top border-secondary" style="max-height: 70vh; overflow-y: auto;">
-        <div class="list-group list-group-flush">
-            @if (Sessions != null && Sessions.Any())
-            {
-                @foreach (var session in Sessions)
-                {
-                    <div class="list-group-item list-group-item-action py-3 bg-dark text-light border-0" style="border-bottom: 1px solid #495057 !important; cursor: pointer;" @onclick="() => NavigateToSession(session.Id)">
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                            <strong class="mb-1 text-white">@session.Title</strong>
-                            <small class="text-muted">@session.CreatedAt.ToString("MMM dd")</small>
-                        </div>
-                        <div class="mb-1 small">
-                            @if (session.Messages != null && session.Messages.Any())
-                            {
-                                var lastMessage = session.Messages.OrderByDescending(m => m.Timestamp).FirstOrDefault();
-                                @if (lastMessage != null)
-                                {
-                                    <span class="text-light">@(lastMessage.Content.Length > 50 ? lastMessage.Content.Substring(0, 50) + "..." : lastMessage.Content)</span>
-                                }
-                            }
-                            else
-                            {
-                                <span class="text-muted">Nueva conversación</span>
-                            }
-                        </div>
-                    </div>
-                }
-            }
-            else
-            {
-                <div class="list-group-item py-3 bg-dark border-0">
-                    <div class="text-center text-muted">
-                        <p class="mb-0">No hay sesiones de chat</p>
-                        <small>Inicia una nueva conversación</small>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</div>
 
-<!-- Desktop Sidebar (visible only on desktop) -->
-<div class="d-none d-md-flex flex-column align-items-stretch flex-shrink-0 bg-dark h-100 position-relative" style="width: 280px; max-width: 380px;">
-    <nav class="flex-column h-100">
-        <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-light text-decoration-none border-bottom border-secondary">
-            <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap" /></svg>
-            <span class="fs-5 fw-semibold text-white">Sesiones de Chat</span>
-        </a>
-        <div class="list-group list-group-flush border-bottom border-secondary flex-grow-1 overflow-auto" style="background: transparent;">
-            @if (Sessions != null && Sessions.Any())
+    <!-- Botón Nuevo Chat -->
+    <div class="new-chat-container">
+        <button class="btn btn-new-chat" @onclick="ClearChat">
+            <i class="bi bi-plus-lg"></i>
+            <span>Nuevo Chat</span>
+        </button>
+    </div>
+
+    <!-- Lista de Chats -->
+    <div class="sessions-list">
+        @if (Sessions != null && Sessions.Any())
+        {
+            @foreach (var session in Sessions)
             {
-                @foreach (var session in Sessions)
-                {
-                    <div class="list-group-item list-group-item-action py-3 lh-tight bg-dark text-light border-0" style="border-bottom: 1px solid #495057 !important; cursor: pointer;" @onclick="() => NavigateToSession(session.Id)">
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                            <strong class="mb-1 text-white">@session.Title</strong>
-                            <small class="text-muted">@session.CreatedAt.ToString("MMM dd")</small>
-                        </div>
-                        <div class="col-10 mb-1 small">
-                            @if (session.Messages != null && session.Messages.Any())
-                            {
-                                var lastMessage = session.Messages.OrderByDescending(m => m.Timestamp).FirstOrDefault();
-                                @if (lastMessage != null)
-                                {
-                                    <span class="text-light">@(lastMessage.Content.Length > 60 ? lastMessage.Content.Substring(0, 60) + "..." : lastMessage.Content)</span>
-                                }
-                            }
-                            else
-                            {
-                                <span class="text-muted">Nueva conversación</span>
-                            }
-                        </div>
+                var isActive = session.Id == SessionState.CurrentSessionId;
+                <div class="session-item @(isActive ? "active" : "")"
+                     @onclick="() => NavigateToSession(session.Id)">
+                    
+                    <div class="session-icon">
+                        <i class="bi bi-chat-left-text"></i>
                     </div>
-                }
-            }
-            else
-            {
-                <div class="list-group-item py-3 lh-tight bg-dark border-0">
-                    <div class="text-center text-muted">
-                        <p class="mb-0">No hay sesiones de chat</p>
-                        <small>Inicia una nueva conversación</small>
+
+                    <div class="session-details">
+                        @if (editingSessionId == session.Id)
+                        {
+                            <div class="d-flex align-items-center gap-1" @onclick:stopPropagation="true">
+                                <input class="session-edit-input"
+                                       @bind="editTitle" @bind:event="oninput"
+                                       maxlength="80"
+                                       @onkeydown="(e) => OnTitleKeyDown(e, session.Id)"
+                                       @onblur="() => SaveTitle(session.Id)"
+                                       placeholder="Título" />
+                                <button class="btn-action btn-save-edit" @onclick="() => SaveTitle(session.Id)" title="Guardar">
+                                    <i class="bi bi-check"></i>
+                                </button>
+                                <button class="btn-action btn-cancel-edit" @onclick="CancelEdit" title="Cancelar">
+                                    <i class="bi bi-x"></i>
+                                </button>
+                            </div>
+                        }
+                        else
+                        {
+                            <h4 class="session-title">@session.Title</h4>
+                            <span class="session-date">@session.CreatedAt.ToString("MMM dd")</span>
+                        }
                     </div>
+
+                    @if (editingSessionId != session.Id)
+                    {
+                        <div class="session-actions" @onclick:stopPropagation="true">
+                            <button class="btn-action" @onclick="() => StartEdit(session.Id, session.Title)" title="Renombrar">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn-action btn-delete" @onclick="() => OpenDeleteConfirm(session.Id, session.Title)" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    }
                 </div>
             }
+        }
+        else
+        {
+            <div class="text-center text-muted py-4">
+                <i class="bi bi-chat-dots fs-3 d-block mb-2 text-secondary"></i>
+                <p class="mb-0 small">No hay sesiones de chat</p>
+                <small class="x-small">Inicia una nueva conversación</small>
+            </div>
+        }
+    </div>
+
+    <!-- Footer -->
+    <div class="sidebar-footer">
+        <div class="user-profile">
+            <img src="/images/user-avatar.png" alt="Usuario" class="user-avatar" />
+            <div class="user-info">
+                <span class="user-name">Usuario Demo</span>
+                <span class="user-status">En línea</span>
+            </div>
         </div>
-    </nav>
+        <button class="btn-action" title="Configuración">
+            <i class="bi bi-gear-fill"></i>
+        </button>
+    </div>
 </div>
 
 @code {
-    private bool collapseNavMenu = true;
+    [Parameter] public EventCallback OnToggleSidebar { get; set; }
+    [Parameter] public EventCallback OnCloseMobileSidebar { get; set; }
+    [Parameter] public bool IsCollapsed { get; set; }
+
     private List<MiChatbotBlazor.Data.Models.ChatSession> Sessions { get; set; } = new();
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-    
+
+    // Estado eliminar
+    private bool showDeleteConfirm = false;
+    private int? sessionToDeleteId = null;
+    private string sessionToDeleteTitle = string.Empty;
+
+    // Estado edición de título
+    private int? editingSessionId = null;
+    private string editTitle = string.Empty;
+    private bool isSavingTitle = false;
+
     protected override async Task OnInitializedAsync()
     {
-        var sessionList = await ChatService.GetChatsSessionsAsync("demo");
-        Sessions = sessionList;
+        SessionState.SessionsUpdated += OnSessionsUpdated;
+        Sessions = await ChatService.GetChatsSessionsAsync("demo");
         StateHasChanged();
     }
 
-    private void ToggleNavMenu()
+    private async void OnSessionsUpdated()
     {
-        collapseNavMenu = !collapseNavMenu;
+        Sessions = await ChatService.GetChatsSessionsAsync("demo");
+        await InvokeAsync(StateHasChanged);
     }
 
     private void NavigateToSession(int sessionId)
     {
-        // Cerrar el menú móvil si está abierto
-        collapseNavMenu = true;
-        
-        // Actualizar el estado de la sesión actual
         SessionState.SetCurrentSession(sessionId);
-        
-        // Navegar a la sesión
         Navigation.NavigateTo($"/chat/{sessionId}");
         StateHasChanged();
+    }
+
+    private async Task ClearChat()
+    {
+        var newSession = await ChatService.CreateSessionAsync("demo", "Nueva Conversación");
+        SessionState.SetCurrentSession(newSession.Id);
+        Navigation.NavigateTo($"/chat/{newSession.Id}");
+        SessionState.NotifySessionsUpdated();
+    }
+
+    // --- Edición de título ---
+    private void StartEdit(int id, string currentTitle)
+    {
+        editingSessionId = id;
+        editTitle = currentTitle;
+    }
+
+    private void CancelEdit()
+    {
+        editingSessionId = null;
+        editTitle = string.Empty;
+        isSavingTitle = false;
+        StateHasChanged();
+    }
+
+    private async Task SaveTitle(int id)
+    {
+        if (isSavingTitle) return;
+
+        var trimmed = (editTitle ?? string.Empty).Trim();
+
+        var current = Sessions.FirstOrDefault(s => s.Id == id);
+        if (current == null) { CancelEdit(); return; }
+
+        if (string.IsNullOrWhiteSpace(trimmed) || trimmed == current.Title)
+        {
+            CancelEdit();
+            return;
+        }
+
+        try
+        {
+            isSavingTitle = true;
+            await ChatService.UpdateSessionTitleAsync(id, trimmed);
+            SessionState.NotifySessionsUpdated();
+        }
+        finally
+        {
+            CancelEdit();
+        }
+    }
+
+    private async Task OnTitleKeyDown(KeyboardEventArgs e, int id)
+    {
+        if (e.Key is "Enter")
+        {
+            await SaveTitle(id);
+        }
+        else if (e.Key is "Escape")
+        {
+            CancelEdit();
+        }
+    }
+
+    // --- Eliminar ---
+    private void OpenDeleteConfirm(int id, string title)
+    {
+        sessionToDeleteId = id;
+        sessionToDeleteTitle = title;
+        showDeleteConfirm = true;
+        StateHasChanged();
+    }
+
+    private void CancelDelete()
+    {
+        showDeleteConfirm = false;
+        sessionToDeleteId = null;
+        sessionToDeleteTitle = string.Empty;
+    }
+
+    private async Task ConfirmDelete()
+    {
+        if (sessionToDeleteId.HasValue)
+        {
+            await ChatService.DeleteSessionAsync(sessionToDeleteId.Value);
+            Sessions = await ChatService.GetChatsSessionsAsync("demo");
+
+            var current = SessionState.CurrentSessionId;
+            if (current == sessionToDeleteId.Value)
+            {
+                SessionState.SetCurrentSession(0);
+                Navigation.NavigateTo("/");
+            }
+        }
+        CancelDelete();
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        SessionState.SessionsUpdated -= OnSessionsUpdated;
     }
 }

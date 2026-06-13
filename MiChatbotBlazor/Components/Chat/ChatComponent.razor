@@ -1,81 +1,107 @@
-﻿@using MiChatbotBlazor.Data.Models
+@using MiChatbotBlazor.Data.Models
+@using MiChatbotBlazor.Components.Chat
 @inject IChatService ChatService
 @inject IAIService AIService
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
+@inject SessionStateService SessionState
 
-<div class="chat-container d-flex flex-column h-100">
+<div class="chat-container">
     <!-- Header -->
-    <div class="chat-header bg-primary text-white p-3 d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-            <img src="/images/bot-icon.png" alt="Bot" class="me-2" style="width: 40px; height: 40px;" />
-            <div>
-                <h5 class="mb-0">Mi Chatbot</h5>
-                <small class="@(IsOnline ? "text-success" : "text-warning")">
-                    @(IsOnline ? "En línea" : "Desconectado")
-                </small>
+    <div class="chat-header">
+        <div class="chat-header-info">
+            <!-- Botón de hamburguesa visible solo en móvil -->
+            <button class="btn-hamburger d-md-none" @onclick="ToggleMobileSidebar" title="Ver conversaciones">
+                <i class="bi bi-list fs-5"></i>
+            </button>
+            <img src="/images/bot-icon.png" alt="Bot Avatar" class="bot-header-avatar" />
+            <div class="bot-header-details">
+                <h5>Mi Asistente Virtual</h5>
+                <div class="status-indicator">
+                    <span class="status-dot @(IsOnline ? "online" : "offline")"></span>
+                    <span class="text-muted">@(IsOnline ? "En línea" : "Desconectado")</span>
+                </div>
             </div>
         </div>
-        <button class="btn btn-outline-light btn-sm" @onclick="ClearChat">
-            <i class="fas fa-plus"></i> Nuevo Chat
+        <button class="btn btn-primary btn-sm d-flex align-items-center gap-1" @onclick="ClearChat" title="Iniciar un nuevo chat">
+            <i class="bi bi-plus-lg"></i>
+            <span class="d-none d-sm-inline">Nuevo Chat</span>
         </button>
     </div>
 
     <!-- Área de mensajes -->
-    <div class="messages-container flex-grow-1 overflow-auto p-3" @ref="messagesContainer">
-        @if (messages.Any())
-        {
-            @foreach (var message in messages)
+    <div class="messages-container" @ref="messagesContainer">
+        <div class="chat-messages-wrapper">
+            @if (messages.Count > 1 || (messages.Count == 1 && messages[0].Sender == "user"))
             {
-                <MessageItem Message="message" OnCopyMessage="CopyToClipboard" />
+                @foreach (var message in messages)
+                {
+                    <MessageItem Message="message" OnCopyMessage="CopyToClipboard" />
+                }
             }
-        }
-        
-        @if (isLoading)
-        {
-            <LoadingIndicator />
-        }
+            else
+            {
+                <!-- Pantalla de Bienvenida (Chat vacío) -->
+                <div class="welcome-screen">
+                    <div class="welcome-logo-container">
+                        <div class="pulse-ring"></div>
+                        <img src="/images/bot-icon.png" alt="Bot Logo" class="welcome-logo" />
+                    </div>
+                    <h3 class="welcome-title">¿En qué puedo ayudarte hoy?</h3>
+                    <p class="welcome-subtitle">Pregúntame lo que quieras o selecciona una de estas ideas:</p>
+                    
+                    <div class="suggestions-grid">
+                        <div class="suggestion-card" @onclick='() => ClickSuggestion("Dame 3 ideas creativas para lanzar un blog sobre tecnología y productividad.")'>
+                            <div class="card-icon"><i class="bi bi-lightbulb text-warning"></i></div>
+                            <div class="card-content">
+                                <span class="card-title">Ideas creativas</span>
+                                <span class="card-desc">Lanza un blog sobre tecnología y productividad</span>
+                            </div>
+                        </div>
+                        <div class="suggestion-card" @onclick='() => ClickSuggestion("Ayúdame a redactar un correo formal solicitando información sobre un curso de desarrollo de software.")'>
+                            <div class="card-icon"><i class="bi bi-envelope text-primary"></i></div>
+                            <div class="card-content">
+                                <span class="card-title">Redactar correo</span>
+                                <span class="card-desc">Escribe una solicitud formal para un curso</span>
+                            </div>
+                        </div>
+                        <div class="suggestion-card" @onclick='() => ClickSuggestion("Explica cómo funciona este fragmento de código de forma sencilla:\n\n```csharp\npublic int Add(int a, int b) => a + b;\n```")'>
+                            <div class="card-icon"><i class="bi bi-code-slash text-success"></i></div>
+                            <div class="card-content">
+                                <span class="card-title">Explicar código</span>
+                                <span class="card-desc">Entiende cómo funciona una función en C#</span>
+                            </div>
+                        </div>
+                        <div class="suggestion-card" @onclick='() => ClickSuggestion("Resume brevemente el concepto de Inteligencia Artificial Generativa y cuáles son sus usos principales.")'>
+                            <div class="card-icon"><i class="bi bi-book text-danger"></i></div>
+                            <div class="card-content">
+                                <span class="card-title">Resumir concepto</span>
+                                <span class="card-desc">Concepto y usos de la IA Generativa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            @if (isLoading)
+            {
+                <LoadingIndicator />
+            }
+        </div>
     </div>
 
     <!-- Input de mensaje -->
-    <ChatInput OnSendMessage="SendMessage" IsLoading="isLoading" />
+    <div class="chat-input-wrapper">
+        <ChatInput OnSendMessage="SendMessage" IsLoading="isLoading" />
+    </div>
 </div>
-
-<style>
-    .chat-container {
-        height: calc(100vh - 100px);
-        @* max-width: 800px; *@
-        max-width: 100%;
-        margin: 0 auto;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    .messages-container {
-        background-color: #f8f9fa;
-    }
-
-    .messages-container::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .messages-container::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-
-    .messages-container::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 3px;
-    }
-</style>
 
 @code {
     [Parameter] public int SessionId { get; set; } = 0;
     
     private List<MiChatbotBlazor.Data.Models.ChatMessage> messages = new();
     private bool isLoading = false;
-    private bool IsOnline => true; // Implementar lógica de conexión
+    private bool IsOnline => true;
     private ElementReference messagesContainer;
     private bool hasRendered = false;
     private bool shouldScrollToBottom = false;
@@ -89,7 +115,6 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        // Si cambió el SessionId, recargar los mensajes
         if (SessionId != previousSessionId)
         {
             previousSessionId = SessionId;
@@ -134,6 +159,16 @@
         }
     }
 
+    private async Task ClickSuggestion(string promptText)
+    {
+        await SendMessage(promptText);
+    }
+
+    private void ToggleMobileSidebar()
+    {
+        SessionState.RequestToggleMobileSidebar();
+    }
+
     private async Task SendMessage(string messageContent)
     {
         if (string.IsNullOrWhiteSpace(messageContent) || isLoading)
@@ -150,10 +185,10 @@
             StateHasChanged();
             RequestScrollToBottom();
 
-            // Preparar historial completo de conversación (incluye tanto user como bot)
+            // Preparar historial completo de conversación (últimos 10 mensajes)
             var conversationHistory = messages
                 .OrderBy(m => m.Timestamp)
-                .TakeLast(10) // Limitar a los últimos 10 mensajes para evitar prompts muy largos
+                .TakeLast(10)
                 .Select(m => (object)new { Content = m.Content, Sender = m.Sender })
                 .ToList<dynamic>();
 
@@ -170,7 +205,7 @@
         {
             Console.WriteLine($"Error enviando mensaje: {ex.Message}");
             var errorMessage = await ChatService.AddMessageAsync(SessionId, 
-                "Lo siento, hubo un error. Intenta de nuevo.", "bot");
+                "Lo siento, hubo un error al procesar tu mensaje. Por favor, intenta de nuevo.", "bot");
             messages.Add(errorMessage);
             StateHasChanged();
         }
@@ -178,6 +213,7 @@
         {
             isLoading = false;
             StateHasChanged();
+            RequestScrollToBottom();
         }
     }
 
@@ -186,14 +222,27 @@
         var newSession = await ChatService.CreateSessionAsync("demo", "Nueva Conversación");
         SessionId = newSession.Id;
         await LoadMessages();
+
+        SessionState.NotifySessionsUpdated();
     }
 
     private async Task CopyToClipboard(string text)
     {
-        if (hasRendered)
+        if (hasRendered && !string.IsNullOrEmpty(text))
         {
-            await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
-            // Mostrar notificación de copiado (implementar)
+            try
+            {
+                var success = await JSRuntime.InvokeAsync<bool>("copyToClipboard", text);
+                if (!success)
+                {
+                    Console.WriteLine("Falló la operación de copiado");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al copiar al portapapeles: {ex.Message}");
+                await JSRuntime.InvokeVoidAsync("showCopyNotification", "Error al copiar el mensaje", true);
+            }
         }
     }
 
@@ -203,7 +252,7 @@
         {
             try
             {
-                await Task.Delay(50); // Pequeño delay para asegurar que el DOM se actualice
+                await Task.Delay(50); // Delay mínimo para render de DOM
                 await JSRuntime.InvokeVoidAsync("scrollToBottom", messagesContainer);
             }
             catch (Exception ex)
@@ -213,14 +262,8 @@
         }
     }
 
-    private async Task ScrollToBottom()
-    {
-        await ScrollToBottomSafe();
-    }
-
     public ValueTask DisposeAsync()
     {
-        // Cleanup si es necesario
         return ValueTask.CompletedTask;
     }
 }
