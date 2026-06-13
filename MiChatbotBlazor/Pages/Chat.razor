@@ -5,16 +5,9 @@
 @inject NavigationManager Navigation
 @implements IDisposable
 
-<PageTitle>Chat - Mi Chatbot</PageTitle>
+<PageTitle>Chat - Mi Asistente Virtual</PageTitle>
 
-<div class="container-fluid h-100">
-    <div class="row h-100">
-        <!-- Área principal del chat -->
-        <div class="col-12 p-0">
-            <ChatComponent SessionId="currentSessionId" />
-        </div>
-    </div>
-</div>
+<ChatComponent SessionId="currentSessionId" />
 
 @code {
     [Parameter] public int? SessionId { get; set; }

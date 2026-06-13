@@ -1,11 +1,12 @@
-namespace MiChatbotBlazor.Services
+ï»¿namespace MiChatbotBlazor.Services
 {
     public class SessionStateService
     {
         private int _currentSessionId;
 
         public event Action<int>? SessionChanged;
-        public event Action? SessionsUpdated;  // Nuevo evento para recargar lista
+        public event Action? SessionsUpdated;
+        public event Action? MobileSidebarToggleRequested;
 
         public int CurrentSessionId
         {
@@ -25,10 +26,14 @@ namespace MiChatbotBlazor.Services
             CurrentSessionId = sessionId;
         }
 
-        // Método para invocar cuando las sesiones (lista) cambian
         public void NotifySessionsUpdated()
         {
             SessionsUpdated?.Invoke();
+        }
+
+        public void RequestToggleMobileSidebar()
+        {
+            MobileSidebarToggleRequested?.Invoke();
         }
     }
 }

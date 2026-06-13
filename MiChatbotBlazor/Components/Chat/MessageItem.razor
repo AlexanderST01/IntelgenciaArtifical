@@ -1,239 +1,47 @@
-﻿@using MiChatbotBlazor.Data.Models
+@using MiChatbotBlazor.Data.Models
 @using MessageModel = MiChatbotBlazor.Data.Models.ChatMessage
 @using MiChatbotBlazor.Services
 @inject IMarkdownService MarkdownService
 @inject ITimeZoneService TimeZoneService
 
-<div class="message-wrapper mb-3 @(Message.Sender == "user" ? "text-end" : "text-start")">
-    <div class="d-flex @(Message.Sender == "user" ? "justify-content-end" : "justify-content-start")">
-        <div class="message-content @GetMessageClasses() position-relative" style="max-width: 70%;">
-            @if (Message.Sender == "bot")
-            {
-                <!-- Header con foto y username lado a lado -->
-                <div class="d-flex align-items-center mb-2">
-                    <img src="/images/bot-avatar.png" alt="Bot" class="message-avatar me-2" />
-                    <p class="text-black mb-0 fw-semibold">Bot</p>
-                </div>
-            }
-            
-            <div class="message-bubble @GetBubbleClasses()">
+@if (Message.Sender == "user")
+{
+    <div class="message-wrapper user">
+        <div class="message-content align-items-end">
+            <div class="message-bubble user">
                 <div class="message-text">
-                    @((MarkupString)MarkdownService.ConvertToHtml(Message.Content))
+                    @Message.Content
                 </div>
-                <small class="message-time ">
+                <small class="message-time-user">
                     @TimeZoneService.FormatMessageTime(Message.Timestamp)
                 </small>
-                
-                @if (Message.Sender == "bot")
-                {
-                    <button class="btn btn-sm btn-outline-secondary copy-btn" 
-                            @onclick="() => OnCopyMessage.InvokeAsync(Message.Content)"
-                            title="Copiar mensaje">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                }
             </div>
-            
-            @if (Message.Sender == "user")
-            {
-                <!-- Header con foto y username para usuario -->
-                <div class="d-flex align-items-center justify-content-end mb-2">
-                    <p class="text-black mb-0 fw-semibold me-2">Usuario</p>
-                    <img src="/images/user-avatar.png" alt="Usuario" class="message-avatar" />
-                </div>
-            }
         </div>
     </div>
-</div>
-
-<style>
-    .message-avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-
-    .message-bubble {
-        padding: 12px 16px;
-        border-radius: 18px;
-        position: relative;
-        word-wrap: break-word;
-    }
-
-    .message-bubble.user {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .message-bubble.bot {
-        background-color: #e9ecef;
-        color: #333;
-    }
-
-    .message-text {
-        margin-bottom: 8px;
-    }
-
-    /* Estilos para elementos Markdown */
-    .message-text h1, .message-text h2, .message-text h3, 
-    .message-text h4, .message-text h5, .message-text h6 {
-        margin: 8px 0 4px 0;
-        font-weight: 600;
-    }
-
-    .message-text h1 { font-size: 1.2em; }
-    .message-text h2 { font-size: 1.15em; }
-    .message-text h3 { font-size: 1.1em; }
-    .message-text h4 { font-size: 1.05em; }
-    .message-text h5 { font-size: 1em; }
-    .message-text h6 { font-size: 0.95em; }
-
-    .message-text p {
-        margin: 4px 0;
-        line-height: 1.4;
-    }
-
-    .message-text ul, .message-text ol {
-        margin: 8px 0;
-        padding-left: 20px;
-    }
-
-    .message-text li {
-        margin: 2px 0;
-    }
-
-    .message-text code {
-        background-color: rgba(0, 0, 0, 0.1);
-        padding: 2px 4px;
-        border-radius: 4px;
-        font-family: 'Courier New', monospace;
-        font-size: 0.9em;
-    }
-
-    .message-bubble.user .message-text code {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .message-text pre {
-        background-color: rgba(0, 0, 0, 0.1);
-        padding: 8px 12px;
-        border-radius: 8px;
-        overflow-x: auto;
-        margin: 8px 0;
-        font-family: 'Courier New', monospace;
-        font-size: 0.9em;
-    }
-
-    .message-bubble.user .message-text pre {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .message-text blockquote {
-        border-left: 3px solid #ddd;
-        margin: 8px 0;
-        padding-left: 12px;
-        font-style: italic;
-    }
-
-    .message-bubble.user .message-text blockquote {
-        border-left-color: rgba(255, 255, 255, 0.5);
-    }
-
-    .message-text table {
-        border-collapse: collapse;
-        width: 100%;
-        margin: 8px 0;
-        font-size: 0.9em;
-    }
-
-    .message-text th, .message-text td {
-        border: 1px solid #ddd;
-        padding: 4px 8px;
-        text-align: left;
-    }
-
-    .message-text th {
-        background-color: rgba(0, 0, 0, 0.1);
-        font-weight: 600;
-    }
-
-    .message-bubble.user .message-text th {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .message-text strong {
-        font-weight: 600;
-    }
-
-    .message-text em {
-        font-style: italic;
-    }
-
-    .message-text a {
-        color: inherit;
-        text-decoration: underline;
-    }
-
-    .message-bubble.user .message-text a {
-        color: #cce7ff;
-    }
-
-    .message-text hr {
-        border: none;
-        border-top: 1px solid #ddd;
-        margin: 12px 0;
-    }
-
-    .message-bubble.user .message-text hr {
-        border-top-color: rgba(255, 255, 255, 0.3);
-    }
-
-    .copy-btn {
-        position: absolute;
-        top: 4px;
-        right: 4px;
-        padding: 4px 8px;
-        opacity: 0;
-        transition: all 0.2s ease;
-        border: none;
-        background-color: rgba(255, 255, 255, 0.9);
-        color: #666;
-        border-radius: 4px;
-        font-size: 12px;
-    }
-
-    .copy-btn:hover {
-        background-color: rgba(255, 255, 255, 1);
-        color: #333;
-        transform: scale(1.05);
-    }
-
-    .message-bubble:hover .copy-btn {
-        opacity: 1;
-    }
-
-    .copy-btn:focus {
-        outline: 2px solid #007bff;
-        outline-offset: 2px;
-    }
-
-    .message-time {
-        font-size: 0.75rem;
-    }
-</style>
+}
+else
+{
+    <div class="message-wrapper bot">
+        <div class="bot-message-container">
+            <img src="/images/bot-avatar.png" alt="Bot" class="message-avatar" />
+            <div class="message-content">
+                <div class="message-bubble bot">
+                    <button class="copy-btn" @onclick="() => OnCopyMessage.InvokeAsync(Message.Content)" title="Copiar mensaje">
+                        <i class="bi bi-copy"></i>
+                    </button>
+                    <div class="message-text">
+                        @((MarkupString)MarkdownService.ConvertToHtml(Message.Content))
+                    </div>
+                    <small class="message-time-bot">
+                        @TimeZoneService.FormatMessageTime(Message.Timestamp)
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @code {
     [Parameter] public MessageModel Message { get; set; } = null!;
     [Parameter] public EventCallback<string> OnCopyMessage { get; set; }
-
-    private string GetMessageClasses()
-    {
-        return Message.Sender == "user" ? "align-items-end" : "align-items-start";
-    }
-
-    private string GetBubbleClasses()
-    {
-        return Message.Sender == "user" ? "user" : "bot";
-    }
 }

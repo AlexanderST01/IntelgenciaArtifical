@@ -156,12 +156,6 @@ C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\scopedcss\projec
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets.build.json
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets.development.json
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets\msbuild.MiChatbotBlazor.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets\msbuild.MiChatbotBlazor.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets\msbuild.build.MiChatbotBlazor.props
-C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.MiChatbotBlazor.props
-C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.MiChatbotBlazor.props
-C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\MiChatbo.2AB9CBF3.Up2Date
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\MiChatbotBlazor.dll
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\refint\MiChatbotBlazor.dll
@@ -170,4 +164,10 @@ C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\MiChatbotBlazor.
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\ref\MiChatbotBlazor.dll
 C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\MiChatbotBlazor.sourcelink.json
 c:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\bin\Debug\net8.0\Data\knowledge_base.json
-C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\bin\Debug\net8.0\Markdig.Signed.dll
+C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\staticwebassets.build.json.cache
+c:\Dotnet\IntelgenciaArtifical\MiChatbotBlazor\obj\Debug\net8.0\swae.build.ex.cache
